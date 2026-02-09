@@ -1,22 +1,38 @@
-<!-- usuarios.html  |  Manual separado: Criação de Usuários -->
+<!-- index.html  |  Portal Saga Conecta (Case + Treinamentos) -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portal oficial de apoio e treinamentos do Saga Conecta (Grupo Saga)." />
+
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-  <title>Saga Conecta • Criação de Usuários</title>
+
+  <!-- (Opcional) Favicon -->
+  <!-- <link rel="icon" href="favicon.ico" /> -->
+
+  <title>Saga Conecta • Portal (Case + Treinamentos)</title>
 
   <style>
     :root{
-      --primary:#F37021; --primary-700:#D85F1B;
-      --ink:#111827; --muted:#6B7280;
-      --bg:#F6F7FB; --card:#fff; --border:#E5E7EB;
+      /* Paleta Saga Conecta (ajustável) */
+      --primary:#F37021;        /* laranja Saga */
+      --primary-700:#D85F1B;
+      --ink:#111827;
+      --muted:#6B7280;
+      --bg:#F6F7FB;
+      --card:#FFFFFF;
+      --border:#E5E7EB;
+
+      --ok-bg:#ECFDF5; --ok-bd:#A7F3D0;
       --warn-bg:#FFFBEB; --warn-bd:#FDE68A;
       --lilas-bg:#F3E8FF; --lilas-bd:#E9D5FF; --lilas-bar:#A855F7;
     }
+
     *{ box-sizing:border-box; }
     body{ font-family: Arial, Helvetica, sans-serif; margin:0; background:var(--bg); color:var(--ink); }
+
     header{
       background:linear-gradient(135deg, var(--primary), #FF9A5A);
       color:#fff; padding:26px 18px;
@@ -32,15 +48,39 @@
       border-bottom:1px solid var(--border);
       padding:10px 16px;
     }
-    .nav-wrap{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-    nav a{ text-decoration:none; font-weight:900; color:var(--ink); padding:8px 10px; border-radius:12px; }
-    nav a:hover{ background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+
+    .nav-wrap{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .nav-left{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .nav-left a{
+      color:var(--ink); text-decoration:none; font-weight:800; white-space:nowrap;
+      padding:8px 10px; border-radius:10px;
+    }
+    .nav-left a:hover{ background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+    .nav-left a.active{ background:#fff; outline:2px solid rgba(243,112,33,.25); }
+
+    .nav-right{ display:flex; align-items:center; gap:10px; margin-left:auto; flex-wrap:wrap; }
+    .nav-search{ display:flex; align-items:center; gap:8px; }
+    .nav-search input{
+      width:min(460px, 70vw);
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      outline:none;
+    }
     .btn{
       border:0; cursor:pointer; border-radius:12px;
-      padding:10px 12px; font-weight:900;
+      padding:10px 12px; font-weight:800;
       background:var(--primary); color:#fff;
     }
     .btn:hover{ background:var(--primary-700); }
+
+    #jumpSelect{
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:#fff;
+      font-weight:700;
+    }
 
     main{ padding:24px; max-width:1100px; margin:auto; }
     section{
@@ -52,7 +92,31 @@
       border:1px solid var(--border);
       box-shadow:0 1px 8px rgba(0,0,0,.05);
     }
-    h2{ margin:0 0 10px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+
+    h2{
+      margin:0 0 10px;
+      color:var(--ink);
+      display:flex; align-items:center; gap:10px;
+      padding-bottom:10px;
+      border-bottom:1px solid var(--border);
+    }
+    h3{ margin:18px 0 10px; }
+    p{ line-height:1.45; }
+    .muted{ color:var(--muted); font-size:13px; }
+
+    .badge{
+      display:inline-block;
+      background:rgba(243,112,33,.12);
+      color:var(--primary-700);
+      border:1px solid rgba(243,112,33,.25);
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      margin-left:8px;
+    }
+
+    .ok{ background:var(--ok-bg); border:1px solid var(--ok-bd); padding:12px; border-radius:12px; margin:12px 0; }
     .warning{ background:var(--warn-bg); border:1px solid var(--warn-bd); padding:12px; border-radius:12px; margin:12px 0; }
     .lilas-alert{
       background:var(--lilas-bg);
@@ -60,27 +124,74 @@
       border-left:6px solid var(--lilas-bar);
       padding:14px; border-radius:12px; margin:14px 0;
     }
-    .muted{ color:var(--muted); font-size:13px; }
-    ol, ul{ margin-left:20px; }
-    code{ background:#111827; color:#fff; padding:2px 6px; border-radius:8px; }
+    .lilas-alert strong{ display:block; margin-bottom:6px; }
 
-    /* Box fixo “Atenção: anote a senha” */
-    .sticky-alert{
-      position:fixed; right:16px; bottom:16px; z-index:999;
-      width:min(420px, calc(100% - 32px));
-      background:var(--warn-bg);
-      border:1px solid var(--warn-bd);
-      border-left:6px solid #F59E0B;
-      border-radius:14px;
-      padding:12px 14px;
-      box-shadow:0 10px 24px rgba(0,0,0,.18);
+    /* Cards e grid */
+    .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    @media (max-width: 900px){ .grid-2{ grid-template-columns:1fr; } }
+
+    /* Vídeos */
+    .video-card{
+      background:#FAFAFD;
+      border:1px solid var(--border);
+      padding:14px;
+      border-radius:16px;
+      margin:12px 0;
     }
-    .sticky-alert strong{ display:block; margin-bottom:6px; }
-    .sticky-alert .hint{ font-size:13px; color:#4B5563; line-height:1.35; }
+    .video-title{
+      display:flex; align-items:center; gap:10px;
+      font-weight:900;
+      margin:0 0 10px;
+    }
+    .video-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      align-items:start;
+    }
+    .video-label{
+      font-weight:900;
+      color:var(--ink);
+      margin:6px 0 10px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .video-frame{
+      background:#000;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid var(--border);
+    }
+    .video-frame.horizontal iframe{ width:100%; height:360px; }
+    .video-frame.vertical{ max-width:280px; margin:0 auto; }
+    .video-frame.vertical iframe{ width:100%; height:360px; }
 
     @media (max-width: 900px){
-      .sticky-alert{ left:16px; right:16px; }
+      .video-grid{ grid-template-columns:1fr; }
+      .video-frame.vertical{ max-width:320px; }
     }
+
+    footer{ text-align:center; padding:18px; color:var(--muted); }
+
+    /* Botão topo */
+    #backToTop{
+      display:none;
+      position:fixed;
+      bottom:18px;
+      left:18px;
+      z-index:999;
+      background:var(--primary);
+      color:#fff;
+      border:none;
+      border-radius:999px;
+      padding:12px 16px;
+      cursor:pointer;
+      font-weight:900;
+      box-shadow:0 8px 20px rgba(0,0,0,.18);
+    }
+    #backToTop:hover{ background:var(--primary-700); }
+
+    /* Ocultar sections na busca */
+    .hidden{ display:none !important; }
   </style>
 </head>
 
@@ -89,85 +200,371 @@
   <div class="wrap">
     <img src="logo_saga.png" alt="Logo Saga" style="height:48px;" />
     <div>
-      <h1>Criação de Usuários – Saga Conecta</h1>
-      <p>Manual operacional separado (cadastro, permissões, loja e credenciais).</p>
+      <h1>Saga Conecta • Portal de Treinamento <span class="badge">Case de Sucesso</span></h1>
+      <p>Conteúdo oficial: visão geral, papéis, fluxos e vídeos por persona.</p>
     </div>
   </div>
 </header>
 
 <nav>
   <div class="nav-wrap">
-    <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Voltar ao Portal</a>
-    <a href="#inicio"><i class="fa-solid fa-gear"></i> Como chegar</a>
-    <a href="#sem-dms"><i class="fa-solid fa-user-xmark"></i> Sem Dealer</a>
-    <a href="#regras"><i class="fa-solid fa-scale-balanced"></i> Regras</a>
+    <div class="nav-left">
+      <a href="#sobre"><i class="fa-solid fa-circle-info"></i> Sobre</a>
+      <a href="#papeis"><i class="fa-solid fa-user-group"></i> Papéis</a>
+      <a href="#fluxos"><i class="fa-solid fa-route"></i> Fluxos</a>
+      <a href="#baixar-entregas"><i class="fa-solid fa-download"></i> Baixar Entregas</a>
+      <a href="#videos"><i class="fa-solid fa-clapperboard"></i> Vídeos</a>
+
+      <!-- Página separada -->
+      <a href="usuarios.html"><i class="fa-solid fa-user-gear"></i> Criação de Usuários</a>
+    </div>
+
+    <div class="nav-right">
+      <div class="nav-search">
+        <input id="searchInput" type="search" placeholder="Pesquisar no portal (persona, etapa, vídeo...)" />
+        <button id="clearSearch" class="btn" type="button">Limpar</button>
+      </div>
+
+      <select id="jumpSelect" aria-label="Ir para">
+        <option value="">Ir para…</option>
+        <option value="#sobre">Sobre</option>
+        <option value="#papeis">Papéis</option>
+        <option value="#fluxos">Fluxos</option>
+        <option value="#baixar-entregas">Baixar Entregas</option>
+        <option value="#videos">Vídeos</option>
+      </select>
+    </div>
   </div>
 </nav>
 
 <main>
-  <section id="inicio">
-    <h2><i class="fa-solid fa-user-gear"></i> Configuração Inicial – Como chegar à criação de usuários</h2>
-    <p class="muted">Passo a passo comum antes de cadastrar qualquer perfil.</p>
+  <section id="sobre">
+    <h2><i class="fa-solid fa-bolt"></i> O que é o Saga Conecta</h2>
 
-    <ol>
-      <li>Entre no Saga Conecta com usuário <strong>administrador</strong> ou com permissões completas.</li>
-      <li>No menu, acesse <strong>Configurações</strong>.</li>
-      <li>Clique em <strong>Cadastro de Usuário</strong>.</li>
-      <li>Clique em <strong>Criar Usuário</strong>.</li>
-      <li>Defina <strong>Menu</strong> + <strong>Permissões</strong> + <strong>Loja</strong> e clique em <strong>Salvar</strong>.</li>
-      <li>Após salvar, anote o <strong>login</strong> e a <strong>senha temporária</strong> exibidos pelo sistema.</li>
-    </ol>
+    <p>
+      O <strong>Saga Conecta</strong> é a solução digital do Grupo Saga que centraliza e organiza toda a jornada de entrega de veículos,
+      conectando vendedores, áreas operacionais, gestores e clientes em um único ambiente.
+    </p>
 
-    <div class="warning">
-      <strong><i class="fa-solid fa-triangle-exclamation"></i> Atenção</strong><br/>
-      As credenciais aparecem imediatamente após salvar. No primeiro acesso, o usuário troca a senha.
+    <p>
+      A plataforma permite acompanhar, de forma estruturada, as etapas do pós-venda — do faturamento até a entrega do veículo —
+      com atualização direta das áreas envolvidas, como despachante, estética, acessórios, revisão e entrega técnica.
+      As comunicações com o cliente são feitas por meio de <strong>notificações totalmente personalizáveis</strong>,
+      permitindo definir <strong>quais mensagens o cliente recebe</strong> e <strong>o conteúdo de cada notificação</strong>.
+    </p>
+
+    <div class="ok">
+      <strong>Objetivo:</strong> aumentar agilidade, padronização e transparência no processo de entrega, fortalecendo a experiência do cliente e o controle operacional da loja.
+    </div>
+
+    <div class="grid-2">
+      <div class="warning">
+        <strong><i class="fa-solid fa-triangle-exclamation"></i> Observação importante</strong><br/>
+        Este portal é um <strong>documento vivo</strong> (atualizações contínuas) e deve ser o ponto único de consulta.
+      </div>
+      <div class="warning">
+        <strong><i class="fa-solid fa-link"></i> Página separada</strong><br/>
+        A parte de <strong>Criação de Usuários</strong> foi movida para <strong>usuarios.html</strong> para deixar o portal mais “case” e menos operacional.
+      </div>
     </div>
   </section>
 
-  <section id="sem-dms">
-    <h2><i class="fa-solid fa-user-xmark"></i> Usuário terceirizado / Sem vínculo com Dealer (DMS)</h2>
-    <p>Use para funções/terceiros que não existem no Dealer.</p>
+  <section id="papeis">
+    <h2><i class="fa-solid fa-user-group"></i> Papéis no App e Responsabilidades</h2>
+
+    <h3><i class="fa-solid fa-user-tie"></i> 1. Vendas (Vendedor / Consultor)</h3>
+    <ul>
+      <li>Acompanhar entregas</li>
+      <li>Garantir dados do cliente (Mobi → Dealer)</li>
+      <li>Agendar entrega</li>
+      <li>Preencher serviços conectados</li>
+      <li><strong>Etapas:</strong> Venda concluída; Cadastro do cliente; Serviços conectados; Agendamento da entrega</li>
+    </ul>
+
+    <h3><i class="fa-solid fa-file-lines"></i> 2. Despachante</h3>
+    <ul>
+      <li>Documentação</li>
+      <li>Emplacamento</li>
+      <li><strong>Etapas:</strong> Documentação do cliente; Emplacamento</li>
+    </ul>
+
+    <h3><i class="fa-solid fa-hand-holding-dollar"></i> 3. Financeiro</h3>
+    <ul>
+      <li>Faturamento</li>
+      <li>Confirmação de pagamento</li>
+      <li><strong>Etapas:</strong> Faturamento; Pagamento confirmado</li>
+    </ul>
+
+    <h3><i class="fa-solid fa-shield-halved"></i> 4. Seguro</h3>
+    <ul>
+      <li>Registrar contratação do seguro</li>
+      <li>Atualizar status (pendente / contratado / recusado)</li>
+      <li>Informar pendências de documentação</li>
+      <li>Anexar comprovantes quando necessário</li>
+      <li><strong>Etapas:</strong> Contratação do seguro; Validação do seguro</li>
+      <li><strong>Impacto:</strong> a entrega não pode ser concluída sem seguro validado (quando aplicável)</li>
+    </ul>
+
+    <h3><i class="fa-solid fa-award"></i> 5. Qualidade (Governança)</h3>
+    <ul>
+      <li>Garantir aderência ao processo</li>
+      <li>Acompanhar gargalos e reincidências</li>
+      <li>Atuar em desvios</li>
+      <li>Usar dashboards gerenciais</li>
+      <li><strong>Observação:</strong> não executa etapas operacionais</li>
+    </ul>
+
+    <h3><i class="fa-solid fa-wand-magic-sparkles"></i> 6. Estética (Película e Acabamento)</h3>
+    <ul>
+      <li>Aplicar e registrar película</li>
+      <li>Registrar acabamento estético</li>
+      <li>Anexar fotos</li>
+      <li><strong>Etapas:</strong> Película; Acabamento estético</li>
+    </ul>
+
+    <h3><i class="fa-solid fa-boxes-stacked"></i> 7. Acessórios</h3>
+    <ul>
+      <li>Instalar acessórios</li>
+      <li>Registrar status e evidências</li>
+      <li><strong>Etapas:</strong> Instalação de acessórios</li>
+    </ul>
+
+    <h3><i class="fa-solid fa-car-side"></i> 8. Entregador (Entrega Técnica)</h3>
+    <ul>
+      <li>Executar checklist</li>
+      <li>Preparar veículo</li>
+      <li>Realizar entrega técnica</li>
+      <li>Confirmar entrega</li>
+      <li>Anexar fotos finais</li>
+      <li><strong>Etapas:</strong> Checklist; Preparação; Entrega técnica; Confirmação</li>
+    </ul>
+
+    <h3><i class="fa-solid fa-clipboard-check"></i> 9. Agente de Pátio / Revisão (Automático)</h3>
+    <ul>
+      <li>Revisão automática via Dealer</li>
+      <li><strong>Acompanhamento:</strong> Qualidade / Gestão</li>
+    </ul>
+
+    <h3><i class="fa-solid fa-chart-line"></i> 10. Gestor / Gerente</h3>
+    <ul>
+      <li>Visualizar todas as entregas</li>
+      <li>Acompanhar SLA e gargalos</li>
+      <li>Reabrir etapas quando necessário</li>
+    </ul>
+  </section>
+
+  <section id="fluxos">
+    <h2><i class="fa-solid fa-route"></i> Fluxo de Agendamento de Entrega</h2>
+    <div class="warning">
+      <strong><i class="fa-solid fa-diagram-project"></i> Lógica do fluxo</strong><br/>
+      O vendedor conclui a venda, atualiza o <strong>Mobi</strong> e os dados seguem para o <strong>Saga Conecta</strong>.
+      Em seguida, <strong>Seguro, Acessórios e Estética</strong> atualizam suas etapas no Saga Conecta, preparando o veículo para a entrega.
+    </div>
+
+    <!-- Troque o src pela imagem gerada (local no seu projeto) -->
+    <img src="fluxo-agendamento.png" alt="Fluxo de agendamento de entrega" style="width:100%; border:1px solid var(--border); border-radius:16px;">
+    <p class="muted">Dica: exporte essa imagem em PNG (1920px) para ficar perfeita no portfólio e no portal.</p>
+  </section>
+
+  <section id="baixar-entregas">
+    <h2><i class="fa-solid fa-download"></i> Baixar Entregas (entregas antigas)</h2>
+    <p>Função para <strong>arquivar entregas concluídas</strong> (veículo já entregue ao cliente), mantendo a lista operacional mais limpa.</p>
 
     <ol>
-      <li>Ao criar o usuário, clique em <strong>Cadastrar usuário sem vínculo ao DMS</strong>.</li>
-      <li>Confirme em <strong>Continuar sem vínculo</strong>.</li>
-      <li>Preencha manualmente: <strong>Login</strong>, <strong>Nome</strong>, <strong>E-mail (2FA)</strong>, <strong>Departamento</strong> e <strong>Cargo</strong>.</li>
+      <li>Vá em <strong>Lista</strong></li>
+      <li>Clique em <strong>Baixar Entregas</strong></li>
+      <li>Filtre por <strong>chassi</strong>, <strong>nome do cliente</strong> etc.</li>
+      <li>Selecione as entregas que deseja baixar</li>
+      <li>Clique em <strong>Baixar Entregas</strong> novamente para confirmar</li>
     </ol>
 
     <div class="warning">
-      <strong>Limitações do usuário sem DMS:</strong>
-      <ul>
-        <li>Sem sincronização automática de status</li>
-        <li>Sem permissão para aplicar descontos</li>
-        <li>Filtro de vendas restrito</li>
-      </ul>
+      <strong><i class="fa-solid fa-triangle-exclamation"></i> Importante</strong><br/>
+      Use apenas em entregas <strong>concluídas</strong>. Ao baixar, a entrega sai da lista operacional principal.
     </div>
   </section>
 
-  <section id="regras">
-    <h2><i class="fa-solid fa-scale-balanced"></i> Regras importantes</h2>
+  <section id="videos">
+    <h2><i class="fa-solid fa-clapperboard"></i> Vídeos</h2>
+    <p class="muted">Vídeos por persona. Como estão no Vimeo, o download depende das permissões do player.</p>
 
-    <div class="lilas-alert">
-      <strong>Regra Geral</strong>
-      Perfis que <strong>não são Vendedor</strong> devem ter a permissão <strong>39 – Visualizar Todas as Entregas</strong>.
+    <!-- GERAL -->
+    <div class="video-card">
+      <div class="video-title"><i class="fa-solid fa-circle-play"></i> Visão Geral do Saga Conecta</div>
+
+      <div class="video-grid">
+        <div class="video-item">
+          <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
+          <div class="video-frame vertical">
+            <iframe src="https://player.vimeo.com/video/1152026208" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <div class="video-item">
+          <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
+          <div class="video-frame horizontal">
+            <iframe src="https://player.vimeo.com/video/1152022036" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="warning">
-      <strong>Permissão 31 (Agendar/Registrar Entrega)</strong><br/>
-      Deixar ativa para vendedor apenas enquanto o autoagendamento do cliente não estiver liberado.
-      Depois, manter a 31 apenas para quem opera a entrega (ex.: entregador).
+    <!-- GESTOR / KEY USER -->
+    <div class="video-card">
+      <div class="video-title"><i class="fa-solid fa-circle-play"></i> Gestor / Key User</div>
+      <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
+      <div class="video-frame horizontal">
+        <iframe src="https://player.vimeo.com/video/1152187318" frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
     </div>
+
+    <!-- AGENDAMENTO -->
+    <div class="video-card">
+      <div class="video-title"><i class="fa-solid fa-circle-play"></i> Agendamento Manual</div>
+      <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
+      <div class="video-frame vertical">
+        <iframe src="https://player.vimeo.com/video/1152226737" frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <!-- ENTREGA TÉCNICA -->
+    <div class="video-card">
+      <div class="video-title"><i class="fa-solid fa-circle-play"></i> Entrega Técnica</div>
+      <div class="video-grid">
+        <div class="video-item">
+          <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
+          <div class="video-frame vertical">
+            <iframe src="https://player.vimeo.com/video/1152231601" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="video-item">
+          <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
+          <div class="video-frame horizontal">
+            <iframe src="https://player.vimeo.com/video/1152231643" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEGURO -->
+    <div class="video-card">
+      <div class="video-title"><i class="fa-solid fa-shield-halved"></i> Seguro</div>
+      <div class="video-grid">
+        <div class="video-item">
+          <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
+          <div class="video-frame vertical">
+            <iframe src="https://player.vimeo.com/video/1152243380" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="video-item">
+          <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
+          <div class="video-frame horizontal">
+            <iframe src="https://player.vimeo.com/video/1152243248" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACESSÓRIOS -->
+    <div class="video-card">
+      <div class="video-title"><i class="fa-solid fa-boxes-stacked"></i> Acessórios</div>
+      <div class="video-grid">
+        <div class="video-item">
+          <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
+          <div class="video-frame vertical">
+            <iframe src="https://player.vimeo.com/video/1152244542" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="video-item">
+          <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
+          <div class="video-frame horizontal">
+            <iframe src="https://player.vimeo.com/video/1152244388" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMBELEZAMENTO -->
+    <div class="video-card">
+      <div class="video-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Embelezamento</div>
+      <div class="video-grid">
+        <div class="video-item">
+          <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
+          <div class="video-frame vertical">
+            <iframe src="https://player.vimeo.com/video/1152247751" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="video-item">
+          <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
+          <div class="video-frame horizontal">
+            <iframe src="https://player.vimeo.com/video/1152247670" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 </main>
 
-<!-- Box fixo: Atenção para credenciais -->
-<div class="sticky-alert" id="stickyAlert">
-  <strong>⚠️ Atenção: anote a senha</strong>
-  <div class="hint">
-    Após clicar em <strong>Salvar</strong>, o sistema mostra <strong>login</strong> e <strong>senha temporária</strong>.
-    Registre e repasse ao usuário. No primeiro acesso, ele trocará a senha.
-  </div>
-  <button class="btn" onclick="document.getElementById('stickyAlert').style.display='none'">Entendi</button>
-</div>
+<footer>
+  Saga Conecta • Portal interno (documento vivo)
+</footer>
+
+<button id="backToTop" title="Voltar ao topo">⬆ Topo</button>
+
+<script>
+  // Jump select
+  (function () {
+    const jump = document.getElementById('jumpSelect');
+    if (!jump) return;
+    jump.addEventListener('change', () => {
+      if (!jump.value) return;
+      window.location.hash = jump.value;
+      jump.value = '';
+    });
+  })();
+
+  // Search filter
+  (function () {
+    const input = document.getElementById('searchInput');
+    const clear = document.getElementById('clearSearch');
+    const sections = Array.from(document.querySelectorAll('main section'));
+
+    const normalize = (s) =>
+      (s || '').toString().toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    const apply = (q) => {
+      const query = normalize(q);
+      if (!query) return sections.forEach(sec => sec.classList.remove('hidden'));
+      sections.forEach(sec => {
+        const text = normalize(sec.innerText);
+        sec.classList.toggle('hidden', !text.includes(query));
+      });
+    };
+
+    if (input) input.addEventListener('input', () => apply(input.value));
+    if (clear) clear.addEventListener('click', () => { input.value=''; apply(''); input.focus(); });
+  })();
+
+  // Back to top
+  (function(){
+    const btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => btn.style.display = window.scrollY > 400 ? 'block' : 'none');
+    btn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+  })();
+</script>
 </body>
 </html>
