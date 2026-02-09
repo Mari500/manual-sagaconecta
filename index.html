@@ -1,1083 +1,173 @@
+<!-- usuarios.html  |  Manual separado: Criação de Usuários -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-/>
-  <title>Manual – Saga Conecta</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <title>Saga Conecta • Criação de Usuários</title>
+
   <style>
-    body { font-family: Arial, Helvetica, sans-serif; margin: 0; background:#f7f7f7; color:#222; }
-    header { background:#0b3a66; color:#fff; padding:24px; }
-    header h1 { margin:0; font-size:24px; }
-    header p { margin:6px 0 0; opacity:.9 }
-
-    nav {
-      position: sticky;
-      top: 0; background:#fff; border-bottom:1px solid #ddd; padding:10px 16px; position:sticky; top:0; z-index:10 }
-    nav a { margin-right:12px; color:#0b3a66; text-decoration:none; font-weight:bold; white-space:nowrap }
-
-    .nav-wrap { display:flex; align-items:center; gap:12px; flex-wrap:wrap }
-    .nav-left { display:flex; align-items:center; gap:8px; flex-wrap:wrap }
-    .nav-right { display:flex; align-items:center; gap:8px; margin-left:auto }
-    .jump-label { font-size:13px; color:#555 }
-
-    .nav-search { display:flex; align-items:center; gap:8px; margin-left:auto }
-    .nav-search input {
-      width: min(520px, 60vw);
-      padding:10px 12px;
-      border:1px solid #ddd;
-      border-radius:10px;
-      outline:none;
+    :root{
+      --primary:#F37021; --primary-700:#D85F1B;
+      --ink:#111827; --muted:#6B7280;
+      --bg:#F6F7FB; --card:#fff; --border:#E5E7EB;
+      --warn-bg:#FFFBEB; --warn-bd:#FDE68A;
+      --lilas-bg:#F3E8FF; --lilas-bd:#E9D5FF; --lilas-bar:#A855F7;
     }
-    .nav-search button {
-      border:0;
-      background:#0b3a66;
-      color:#fff;
-      padding:10px 12px;
-      border-radius:10px;
-      cursor:pointer;
+    *{ box-sizing:border-box; }
+    body{ font-family: Arial, Helvetica, sans-serif; margin:0; background:var(--bg); color:var(--ink); }
+    header{
+      background:linear-gradient(135deg, var(--primary), #FF9A5A);
+      color:#fff; padding:26px 18px;
     }
-    #jumpSelect {
-      padding:10px 12px;
-      border:1px solid #ddd;
-      border-radius:10px;
-      background:#fff;
+    header .wrap{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; }
+    header h1{ margin:0; font-size:26px; }
+    header p{ margin:6px 0 0; opacity:.95; }
+
+    nav{
+      position:sticky; top:0; z-index:20;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:saturate(140%) blur(8px);
+      border-bottom:1px solid var(--border);
+      padding:10px 16px;
     }
-
-
-    main { padding:24px; max-width:1100px; margin:auto }
-
-    section {
-      scroll-margin-top: 110px;
-      background:#fff; margin-bottom:24px; padding:24px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,.08)
+    .nav-wrap{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    nav a{ text-decoration:none; font-weight:900; color:var(--ink); padding:8px 10px; border-radius:12px; }
+    nav a:hover{ background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+    .btn{
+      border:0; cursor:pointer; border-radius:12px;
+      padding:10px 12px; font-weight:900;
+      background:var(--primary); color:#fff;
     }
+    .btn:hover{ background:var(--primary-700); }
 
-    h2 { color:#0b3a66; border-bottom:2px solid #eee; padding-bottom:8px }
-    h3 { margin-top:20px; color:#333 }
-    ul { margin-left:20px }
-    ol { margin-left:20px }
-
-    .badge { display:inline-block; background:#0b3a66; color:#fff; padding:4px 8px; border-radius:4px; font-size:12px }
-    .warning { background:#fff3cd; border:1px solid #ffeeba; padding:12px; border-radius:6px; margin:12px 0 }
-    .ok { background:#e6fffa; border:1px solid #b2f5ea; padding:12px; border-radius:6px; margin:12px 0 }
-
-    /* Container lilás (atenção) */
-    .lilas-alert {
-      background: #f3e8ff;
-      border: 1px solid #e9d5ff;
-      border-left: 6px solid #a855f7;
-      padding: 14px;
-      border-radius: 10px;
-      margin: 14px 0;
+    main{ padding:24px; max-width:1100px; margin:auto; }
+    section{
+      scroll-margin-top:120px;
+      background:var(--card);
+      margin-bottom:18px;
+      padding:22px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      box-shadow:0 1px 8px rgba(0,0,0,.05);
     }
-    .lilas-alert strong { display:block; margin-bottom:6px; }
-    .lilas-alert p { margin: 8px 0; }
-
-    /* Card de vídeo */
-    .video-card { background:#f8fafc; border:1px solid #e5e7eb; padding:14px; border-radius:12px; margin:12px 0 }
-    .video-header { font-weight:700; margin-bottom:10px; color:#0b3a66 }
-
-      .download-video {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 8px 12px;
-    background: #0b3a66;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-  }
-
-  .download-video:hover {
-    background: #092d50;
-  }
-
-    /* Box fixo de atenção */
-    .sticky-alert {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      width: min(420px, calc(100% - 32px));
-      background: #fff3cd;
-      border: 1px solid #ffeeba;
-      border-left: 6px solid #f0ad4e;
-      border-radius: 10px;
-      padding: 12px 14px;
-      box-shadow: 0 8px 20px rgba(0,0,0,.18);
-      z-index: 999;
+    h2{ margin:0 0 10px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+    .warning{ background:var(--warn-bg); border:1px solid var(--warn-bd); padding:12px; border-radius:12px; margin:12px 0; }
+    .lilas-alert{
+      background:var(--lilas-bg);
+      border:1px solid var(--lilas-bd);
+      border-left:6px solid var(--lilas-bar);
+      padding:14px; border-radius:12px; margin:14px 0;
     }
-    .sticky-alert strong { display:block; margin-bottom:6px; }
-    .sticky-alert .hint { font-size: 13px; color:#4a4a4a; }
-    .sticky-alert button {
-      margin-top:10px;
-      border:0;
-      background:#0b3a66;
-      color:#fff;
-      padding:8px 10px;
-      border-radius:8px;
-      cursor:pointer;
+    .muted{ color:var(--muted); font-size:13px; }
+    ol, ul{ margin-left:20px; }
+    code{ background:#111827; color:#fff; padding:2px 6px; border-radius:8px; }
+
+    /* Box fixo “Atenção: anote a senha” */
+    .sticky-alert{
+      position:fixed; right:16px; bottom:16px; z-index:999;
+      width:min(420px, calc(100% - 32px));
+      background:var(--warn-bg);
+      border:1px solid var(--warn-bd);
+      border-left:6px solid #F59E0B;
+      border-radius:14px;
+      padding:12px 14px;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
     }
+    .sticky-alert strong{ display:block; margin-bottom:6px; }
+    .sticky-alert .hint{ font-size:13px; color:#4B5563; line-height:1.35; }
 
-    .hidden { display:none !important; }
-    .muted { color:#666; font-size:13px }
-
-    footer {
-      position: relative; text-align:center; padding:24px; color:#666 }
-      .video-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  align-items: start;
-}
-
-.video-item .video-label {
-  font-weight: 700;
-  color: #0b3a66;
-  margin: 6px 0 10px;
-}
-
-.video-frame {
-  background: #000;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #e5e7eb;
-}
-
-/* Mantém proporção bonitinha */
-.video-frame.horizontal video { aspect-ratio: 16 / 9; }
-.video-frame.vertical {
-  max-width: 280px;   /* controla o tamanho do celular */
-  margin: 0 auto;     /* centraliza */
-}
-
-.video-frame.vertical video {
-  aspect-ratio: 9 / 16;
-}
-
-/* Responsivo: no celular empilha */
-@media (max-width: 900px) {
-  .video-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-    @media (max-width: 900px) {
-      .nav-search { width:100%; margin-left:0 }
-      .nav-search input { width:100% }
-      .nav-left { width:100%; margin-right:0 }
-      #jumpSelect { width:100% }
-      .nav-mini { display:none }
-      section { scroll-margin-top: 160px; }
+    @media (max-width: 900px){
+      .sticky-alert{ left:16px; right:16px; }
     }
   </style>
 </head>
-<body>
 
+<body>
 <header>
-  <div style="display:flex; align-items:center; gap:16px;">
+  <div class="wrap">
     <img src="logo_saga.png" alt="Logo Saga" style="height:48px;" />
     <div>
-      <h1>Manual de Usuários – Saga Conecta</h1>
-      <p>Guia oficial de configuração de usuários, permissões e boas práticas</p>
+      <h1>Criação de Usuários – Saga Conecta</h1>
+      <p>Manual operacional separado (cadastro, permissões, loja e credenciais).</p>
     </div>
   </div>
 </header>
 
 <nav>
   <div class="nav-wrap">
-    <div class="nav-left">
-      <a href="#sobre">Sobre</a>
-      <a href="#inicio">Configuração</a>
-      <a href="#terceirizado">Sem Dealer</a>
-      <a href="#papeis">Papéis</a>
-      <a href="#baixar-entregas">Baixar Entregas</a>
-      <a href="#videos">Vídeos</a>
-    </div>
-
-    <div class="nav-search">
-      <input id="searchInput" type="search" placeholder="Pesquisar no manual (perfil, permissão, função, etapa...)" aria-label="Pesquisar no manual" />
-      <button id="clearSearch" type="button">Limpar</button>
-    </div>
-
-    <div class="nav-left">
-      <label for="jumpSelect" class="jump-label">Ir para:</label>
-      <select id="jumpSelect">
-        <option value="">Selecione um perfil</option>
-        <option value="#vendedor">Vendedor</option>
-        <option value="#despachante">Despachante</option>
-        <option value="#pelicula">Película</option>
-        <option value="#acessorios">Acessórios</option>
-        <option value="#seguros">Seguros</option>
-        <option value="#entregador">Entregador Técnico</option>
-        <option value="#revisao">Revisão</option>
-        <option value="#secretaria">Secretaria / Pátio</option>
-        <option value="#gestor">Gestor / Gerente</option>
-        <option value="#diretor">Diretor / Supervisor</option>
-        <option value="#admin">Administrativo</option>
-        <option value="#keyuser">Key User</option>
-        <option value="#financeiro">Financeiro</option>
-      </select>
-    </div>
+    <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Voltar ao Portal</a>
+    <a href="#inicio"><i class="fa-solid fa-gear"></i> Como chegar</a>
+    <a href="#sem-dms"><i class="fa-solid fa-user-xmark"></i> Sem Dealer</a>
+    <a href="#regras"><i class="fa-solid fa-scale-balanced"></i> Regras</a>
   </div>
-
 </nav>
 
 <main>
-
-<section id="sobre">
-  <h2>O que é o Saga Conecta</h2>
-  <p>
-  O <strong>Saga Conecta</strong> é a solução digital do Grupo Saga que centraliza e organiza toda a jornada de entrega de veículos, conectando vendedores, áreas operacionais, gestores e clientes em um único ambiente.
-</p>
-
-<p>
-  A plataforma permite acompanhar, de forma estruturada, todas as etapas do pós-venda — do faturamento até a entrega do veículo — com atualização direta das áreas envolvidas, como despachante, estética, acessórios, revisão e entrega técnica. 
-  As comunicações com o cliente são feitas por meio de <strong>notificações totalmente personalizáveis</strong>, onde é possível definir <strong>quais mensagens serão enviadas</strong> e <strong>o conteúdo de cada comunicação</strong>, garantindo alinhamento com a estratégia de cada loja.
-</p>
-
-<div class="ok">
-  Objetivo: aumentar a agilidade, a padronização e a transparência no processo de entrega, fortalecendo a experiência do cliente e o controle operacional da loja.
-</div>
-
-  </div>
-</section>
-
-<section id="inicio">
-  <div class="warning"><strong>Regra Geral de Permissões:</strong><br/>
-  <strong>TODOS os perfis que não são Vendedor devem possuir a permissão <u>39 – Visualizar Todas as Entregas</u>.</strong>
-  <br/>Essa permissão garante visão operacional completa da agenda para os times de apoio, operação e gestão.</div>
-
-  <h2>Configuração Inicial – Como chegar à criação de usuários</h2>
-  <p class="muted">Este passo a passo é comum para todos os perfis descritos neste manual.</p>
-
-  <h3>Passo 1 – Entrar no Saga Conecta</h3>
-  <ul>
-    <li>Entre no Saga Conecta com um usuário que possua perfil administrador ou permissões completas.</li>
-    <li>Confirme que você está na loja correta antes de cadastrar novos usuários.</li>
-  </ul>
-
-  <h3>Passo 2 – Abrir Configurações</h3>
-  <ul>
-    <li>No menu principal, clique em <strong>Configurações</strong>.</li>
-  </ul>
-
-  <h3>Passo 3 – Cadastro de Usuário</h3>
-  <ul>
-    <li>Dentro de Configurações, clique em <strong>Cadastro de Usuário</strong>.</li>
-    <li>Você verá a lista de usuários já cadastrados.</li>
-  </ul>
-
-  <h3>Passo 4 – Criar Usuário</h3>
-  <ul>
-    <li>Clique em <strong>Criar Usuário</strong>.</li>
-    <li>Se o usuário existir no Dealer (DMS), utilize a busca pelo nome.</li>
-    <li>Se o usuário <strong>não existir no Dealer</strong>, utilize <strong>Cadastrar usuário sem vínculo ao DMS</strong>.</li>
-  </ul>
-
-  <h3>Passo 5 – Menus, Permissões, Loja e Credenciais</h3>
-  <ul>
-    <li>Defina o <strong>Menu</strong> (ex.: 29 – Agenda de Entrega).</li>
-    <li>Defina as <strong>Permissões</strong> conforme o perfil.</li>
-    <li>Selecione a <strong>Loja</strong> onde o usuário atuará.</li>
-    <li>Clique em <strong>Salvar</strong>.</li>
-  </ul>
-
-  <p>Após salvar, o sistema gera automaticamente:</p>
-  <ul>
-    <li><strong>Login de acesso</strong></li>
-    <li><strong>Senha temporária</strong></li>
-  </ul>
-
-  <div class="warning">
-    As credenciais são exibidas imediatamente após o cadastro e devem ser repassadas ao usuário. No primeiro acesso, ele trocará a senha.
-  </div>
-</section>
-  <div class="warning"><strong>Regra Geral de Permissões:</strong><br/>
-  <strong>TODOS os perfis que não são Vendedor devem possuir a permissão <u>39 – Visualizar Todas as Entregas</u>.</strong>
-  <br/>Essa permissão garante visão operacional completa da agenda para os times de apoio, operação e gestão.</div>
-
-
-<section id="inicio">
-  <h2>Configuração Inicial – Como chegar à criação de usuários</h2>
-  <p>Antes de criar qualquer perfil no Saga Conecta, é necessário acessar corretamente a área de administração do sistema.</p>
-
-  <h3>Passo 1 – Acessar o Saga Conecta</h3>
-  <ul>
-    <li>Entre no Saga Conecta com um usuário que possua perfil administrador ou permissões completas.</li>
-    <li>Certifique-se de estar logado na loja correta.</li>
-  </ul>
-
-  <h3>Passo 2 – Acessar o menu de configurações</h3>
-  <ul>
-    <li>No menu principal do sistema, clique em <strong>Configurações</strong>.</li>
-  </ul>
-
-  <h3>Passo 3 – Entrar em Cadastro de Usuários</h3>
-  <ul>
-    <li>Dentro de Configurações, clique em <strong>Cadastro de Usuário</strong>.</li>
-    <li>Você será direcionado para a tela com a lista de usuários já cadastrados.</li>
-  </ul>
-
-  <h3>Passo 4 – Criar novo usuário</h3>
-  <ul>
-    <li>Clique no botão <strong>Criar Usuário</strong>.</li>
-    <li>Se o usuário existir no Dealer (DMS), utilize a busca pelo nome.</li>
-    <li>Se o usuário <strong>não existir no Dealer</strong>, utilize a opção <strong>Cadastrar usuário sem vínculo ao DMS</strong>.</li>
-  </ul>
-
-  <div class="ok">Esta etapa é comum para todos os perfis descritos neste manual.</div>
-
-  <h3>Passo 5 – Selecionar a Loja e gerar credenciais</h3>
-  <ul>
-    <li>Após configurar os <strong>menus</strong> e <strong>permissões</strong>, selecione a <strong>Loja</strong> onde o usuário irá atuar.</li>
-    <li>É possível selecionar uma ou mais lojas, conforme o perfil.</li>
-    <li>Em seguida, clique em <strong>Salvar</strong>.</li>
-  </ul>
-
-  <p>Após salvar, o sistema irá gerar automaticamente:</p>
-  <ul>
-    <li><strong>Login de acesso</strong></li>
-    <li><strong>Senha temporária</strong></li>
-  </ul>
-
-  <div class="warning">
-    As credenciais são exibidas imediatamente após o cadastro e devem ser repassadas ao usuário. No primeiro acesso, o sistema solicitará a troca da senha.
-  </div>
-</section>
-
-<section id="terceirizado">
-  <h2>Usuário Terceirizado / Sem vínculo com Dealer (DMS)</h2>
-
-  <p>Este tipo de usuário deve ser utilizado para colaboradores terceirizados ou funções que não possuem cadastro no Dealer.</p>
-
-  <h3>Quando utilizar</h3>
-  <ul>
-    <li>Prestadores de serviço</li>
-    <li>Empresas terceirizadas</li>
-    <li>Usuários operacionais que não fazem parte do fluxo comercial</li>
-  </ul>
-
-  <h3>Como cadastrar</h3>
-  <ol>
-    <li>Ao criar o usuário, clique em <strong>Cadastrar usuário sem vínculo ao DMS</strong>.</li>
-    <li>Confirme a ação clicando em <strong>Continuar sem vínculo</strong>.</li>
-    <li>Preencha manualmente os campos:</li>
-  </ol>
-
-  <ul>
-    <li><strong>Login</strong> (padrão @saga)</li>
-    <li><strong>Nome</strong></li>
-    <li><strong>E-mail (2FA)</strong></li>
-    <li><strong>Departamento</strong></li>
-    <li><strong>Cargo</strong></li>
-  </ul>
-
-  <div class="warning">
-    Usuários sem vínculo com o DMS possuem limitações importantes:
-    <ul>
-      <li>Não possuem sincronização automática de status com o Dealer</li>
-      <li>Não podem aplicar descontos em vendas</li>
-      <li>Filtro de vendas restrito</li>
-    </ul>
-  </div>
-
-  <div class="ok">
-    Após o cadastro, siga normalmente a configuração de menus, permissões e lojas conforme o perfil definido.
-  </div>
-</section>
-
-
-<section id="papeis">
-  <h2>👤 Papéis no App e Responsabilidades</h2>
-  <p>Resumo oficial do papel de cada persona no Saga Conecta e quais etapas cada área alimenta. Isso ajuda a loja a seguir o fluxo corretamente e evita travas na conclusão da entrega.</p>
-
-  <h3>1. Vendas (Vendedor / Consultor)</h3>
-  <ul>
-    <li><strong>Responsabilidades:</strong> acompanhar entregas, garantir dados do cliente (Mobi → Dealer), agendar entrega, preencher serviços conectados.</li>
-    <li><strong>Etapas:</strong> Venda concluída; Cadastro do cliente; Serviços conectados; Agendamento da entrega.</li>
-  </ul>
-
-  <h3>2. Despachante</h3>
-  <ul>
-    <li><strong>Responsabilidades:</strong> documentação e emplacamento.</li>
-    <li><strong>Etapas:</strong> Documentação do cliente; Emplacamento.</li>
-  </ul>
-
-  <h3>3. Financeiro</h3>
-  <ul>
-    <li><strong>Responsabilidades:</strong> faturamento e confirmação de pagamento.</li>
-    <li><strong>Etapas:</strong> Faturamento; Pagamento confirmado.</li>
-  </ul>
-
-  <h3>4. Seguro</h3>
-  <ul>
-    <li><strong>Responsabilidades:</strong> registrar contratação, atualizar status (pendente/contratado/recusado), informar pendências de documentação, anexar comprovantes quando necessário.</li>
-    <li><strong>Etapas:</strong> Contratação do seguro; Validação do seguro.</li>
-    <li><strong>Impacto:</strong> a entrega não pode ser concluída sem seguro validado (quando aplicável).</li>
-  </ul>
-
-  <h3>5. Qualidade (Governança)</h3>
-  <ul>
-    <li><strong>Responsabilidades:</strong> garantir aderência ao processo, acompanhar gargalos e reincidências, atuar em desvios, usar dashboards gerenciais.</li>
-    <li><strong>Observação:</strong> não executa etapas operacionais.</li>
-  </ul>
-
-  <h3>6. Estética (Película e Acabamento)</h3>
-  <ul>
-    <li><strong>Responsabilidades:</strong> aplicar e registrar película, registrar acabamento estético, anexar fotos.</li>
-    <li><strong>Etapas:</strong> Película; Acabamento estético.</li>
-  </ul>
-
-  <h3>7. Acessórios</h3>
-  <ul>
-    <li><strong>Responsabilidades:</strong> instalar acessórios, registrar status e evidências.</li>
-    <li><strong>Etapas:</strong> Instalação de acessórios.</li>
-  </ul>
-
-  <h3>8. Entregador (Entrega Técnica)</h3>
-  <ul>
-    <li><strong>Responsabilidades:</strong> executar checklist, preparar veículo, realizar entrega técnica, confirmar entrega, anexar fotos finais.</li>
-    <li><strong>Etapas:</strong> Checklist do veículo; Preparação para entrega; Entrega técnica; Confirmação de entrega.</li>
-  </ul>
-
-  <h3>9. Agente de Pátio / Revisão (Automático)</h3>
-  <ul>
-    <li><strong>Responsabilidades:</strong> revisão automática via Dealer.</li>
-    <li><strong>Acompanhamento:</strong> Qualidade / Gestão.</li>
-  </ul>
-
-  <h3>10. Gestor / Gerente</h3>
-  <ul>
-    <li><strong>Responsabilidades:</strong> visualizar todas as entregas, acompanhar SLA e gargalos, reabrir etapas quando necessário.</li>
-  </ul>
-</section>
-
-<section id="baixar-entregas">
-  <h2>Baixar Entregas (entregas antigas)</h2>
-  <p>Esta função serve para <strong>baixar (arquivar)</strong> entregas antigas — ou seja, veículos que <strong>já foram entregues ao cliente</strong> — para manter a lista mais limpa e facilitar a operação do dia a dia.</p>
-
-  <h3>Como usar</h3>
-  <ol>
-    <li>Acesse a tela de <strong>Lista</strong>.</li>
-    <li>Clique em <strong>Baixar Entregas</strong>.</li>
-    <li>Use os filtros conforme necessário (ex.: <strong>chassi</strong>, <strong>nome do cliente</strong> ou outros filtros disponíveis).</li>
-    <li>Selecione (marque) <strong>todas as entregas</strong> que você deseja baixar.</li>
-    <li>Clique em <strong>Baixar Entregas</strong> novamente para confirmar a baixa.</li>
-  </ol>
-
-  <div class="warning">
-    Importante: esta opção deve ser usada apenas para entregas <strong>concluídas</strong> (veículo já entregue ao cliente). Ao baixar, a entrega deixa de aparecer na lista operacional principal.
-  </div>
-</section>
-
-<section id="vendedor">
-  <h2>Vendedor <span class="badge">Permissões controladas</span></h2>
-  <p><strong>Função no Saga Conecta:</strong> acompanhar a entrega do cliente, orientar o cliente no processo e, quando aplicável, realizar o agendamento (somente enquanto o autoagendamento do cliente ainda não estiver liberado).</p>
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li>Permissões principais: 35, 110, 125</li>
-  </ul>
-  <div class="warning">
-    Regra geral: <strong>Vendedores NÃO possuem a permissão 39 – Visualizar Todas as Entregas</strong>.
-    <br/>A permissão 31 (Agendar/Registrar Entrega) deve ficar ativa somente enquanto o autoagendamento do cliente não estiver liberado. Após a liberação, desativar para vendedores.
-  </div>
-</section>
-
-<section id="despachante">
-  <h2>Despachante</h2>
-  <p><strong>Função no Saga Conecta:</strong> atuar na etapa de documentação e apoio à entrega, mantendo as informações de despachante e acesso às notas fiscais do cliente.</p>
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li>Permissões obrigatórias:</li>
-    <ul>
-      <li>39 – Visualizar Todas as Entregas</li>
-      <li>35 – Editar Despachante</li>
-      <li>110 – Notas Fiscais</li>
-    </ul>
-  </ul>
-  <div class="ok">Todos os perfis que não são Vendedor devem possuir a permissão 39.</div>
-</section>
-
-<section id="pelicula">
-  <h2>Vendedor de Película</h2>
-  <p><strong>Função no Saga Conecta:</strong> atualizar exclusivamente a etapa de película da entrega, garantindo que o status esteja correto para o restante do fluxo.</p>
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li>Permissões: 39 – Visualizar Todas as Entregas, 129 – Editar Película</li>
-  </ul>
-</section>
-
-<section id="acessorios">
-  <h2>Vendedor de Acessórios</h2>
-  <p><strong>Função no Saga Conecta:</strong> atualizar exclusivamente a etapa de acessórios da entrega (ex.: instalação, conclusão e pendências), mantendo o fluxo sincronizado com as demais áreas.</p>
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li>Permissões:</li>
-    <ul>
-      <li>36 – Editar Acessórios na Entrega</li>
-      <li>39 – Visualizar Todas as Entregas</li>
-    </ul>
-  </ul>
-  <div class="warning">
-    Este perfil não pode agendar entregas nem editar outras etapas além de Acessórios.
-  </div>
-</section>
-
-<section id="seguros">
-  <h2>Vendedora de Seguros</h2>
-  <p><strong>Função no Saga Conecta:</strong> atualizar a situação do seguro na entrega, garantindo que o status esteja alinhado antes da conclusão e entrega técnica.</p>
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li>Permissões: 39 – Visualizar Todas as Entregas, 40 – Editar Seguro</li>
-  </ul>
-</section>
-
-<section id="entregador">
-  <h2>Entregador Técnico <span class="badge">Perfil Operacional Completo</span></h2>
-  <p><strong>Função no Saga Conecta:</strong> conduzir o fluxo operacional da entrega, garantindo que todas as etapas estejam corretamente preenchidas até a liberação final do veículo ao cliente.</p>
-
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li><strong>Permissões obrigatórias do Entregador Técnico:</strong></li>
-    <ul>
-      <li>31 – Agendar/Registrar Entrega</li>
-      <li>32 – Editar Observação da Entrega</li>
-      <li>33 – Editar Localização do Veículo/Entrega</li>
-      <li>34 – Editar Situação Software na Entrega</li>
-      <li>38 – Editar Lavagem na Entrega</li>
-      <li>39 – Visualizar Todas as Entregas</li>
-      <li>41 – Editar Revisão de Entrega</li>
-      <li>43 – Confirmar Horário de Entrega</li>
-      <li>44 – Editar Dados Após Entrega</li>
-      <li>45 – Incluir/Editar Foto da Entrega</li>
-      <li>47 – Visualiza Todos os Atendimentos</li>
-      <li>56 – Gerar Checklist/Orçamento do Veículo</li>
-      <li>93 – Recebe Agendamento de Entrega</li>
-      <li>115 – Agendar Entrega em qualquer data</li>
-      <li>125 – Agendar entrega para qualquer consultor</li>
-    </ul>
-  </ul>
-
-  <div class="lilas-alert">
-    <strong>⚠️ Atenção – Regra de conclusão da entrega</strong>
-    <p>O <strong>Entregador Técnico não consegue concluir a entrega do veículo no sistema</strong> se as demais etapas do processo não estiverem devidamente preenchidas.</p>
-    <p>Antes de finalizar a entrega, verifique se todas as áreas responsáveis (revisão, lavagem, acessórios, seguro, película, despachante, entre outras) atualizaram suas respectivas etapas.</p>
-    <p>Essa regra garante controle, qualidade e evita a entrega de veículos com pendências operacionais.</p>
-  </div>
-</section>
-
-<section id="gestor">
-  <h2>Gerente / Gestor de Vendas</h2>
-  <p><strong>Função no Saga Conecta:</strong> visão completa da operação, suporte ao time e gestão do fluxo de entregas da loja (auditoria, correções e decisões).</p>
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li>Permissões: TODAS</li>
-  </ul>
-</section>
-
-<section id="diretor">
-  <h2>Diretor / Supervisor</h2>
-  <p><strong>Função no Saga Conecta:</strong> acompanhamento estratégico e operacional, com autonomia total para consulta, auditoria e correções.</p>
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li>Permissões: TODAS</li>
-  </ul>
-</section>
-
-<section id="admin">
-  <h2>Usuário Administrativo</h2>
-  <p><strong>Função no Saga Conecta:</strong> apoio administrativo e operacional ao processo de entrega (controle, ajustes e suporte às áreas envolvidas).</p>
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li>Permissões: TODAS</li>
-  </ul>
-</section>
-
-<section id="revisao">
-  <h2>Usuário de Revisão</h2>
-  <p><strong>Função no Saga Conecta:</strong> atualizar a etapa de revisão do veículo (status e pendências), sem interferir em outras etapas da entrega.</p>
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li>Permissões: 39 – Visualizar Todas as Entregas, 41 – Editar Revisão</li>
-  </ul>
-</section>
-
-<section id="secretaria">
-  <h2>Secretaria / Pátio – Veículo Chegou</h2>
-  <p><strong>Função no Saga Conecta:</strong> sinalizar que o veículo chegou no pátio, iniciando o fluxo operacional da entrega.</p>
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li>Permissões:</li>
-    <ul>
-      <li>39 – Visualizar Todas as Entregas</li>
-      <li>124 – Editar Veículo Recebido na Entrega</li>
-    </ul>
-  </ul>
-  <div class="warning">Não deve editar outras etapas da entrega nem realizar agendamentos.</div>
-</section>
-
-<section id="keyuser">
-  <h2>Key User</h2>
-  <p><strong>Função no Saga Conecta:</strong> referência da loja para testes, validações de implantação e suporte ao time (perfil completo para auditoria e operação).</p>
-  <ul>
-    <li>Menu: 29 – Agenda de Entrega</li>
-    <li>Permissões: TODAS</li>
-  </ul>
-</section>
-
-<section id="financeiro">
-  <h2>Financeiro / Faturista</h2>
-  <p><strong>Função no Saga Conecta:</strong> atuar nos processos vinculados ao faturamento/financeiro conforme regras do Dealer.</p>
-  <div class="warning">Este perfil é criado automaticamente pelo Dealer (DMS). Não deve ser configurado manualmente no Saga Conecta.</div>
-</section>
-
-
-
-<section id="videos">
-  <h2>Vídeos – Como usar o Saga Conecta</h2>
-  <p>Esta página reúne vídeos rápidos de apoio para o uso do Saga Conecta no dia a dia. Os vídeos podem ser assistidos conforme o perfil do usuário.</p>
-  <p>Introdução ao Saga Conecta e principais funcionalidades.</p>
-
- <!-- GERAL -->
-  <div class="video-card">
-  <div class="video-header">
-    <h3><i class="fa-solid fa-circle-play"></i>
-   Visão Geral do Saga Conecta</h3> 
-  </div>
-
-  <div class="video-grid">
-    <!-- Vídeo formato celular (vertical) -->
-  <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-mobile-screen-button"></i>
-        Versão celular
-      </div>
-     <div class="video-frame vertical">
-  <iframe
-    src="https://player.vimeo.com/video/1152026208"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
+  <section id="inicio">
+    <h2><i class="fa-solid fa-user-gear"></i> Configuração Inicial – Como chegar à criação de usuários</h2>
+    <p class="muted">Passo a passo comum antes de cadastrar qualquer perfil.</p>
+
+    <ol>
+      <li>Entre no Saga Conecta com usuário <strong>administrador</strong> ou com permissões completas.</li>
+      <li>No menu, acesse <strong>Configurações</strong>.</li>
+      <li>Clique em <strong>Cadastro de Usuário</strong>.</li>
+      <li>Clique em <strong>Criar Usuário</strong>.</li>
+      <li>Defina <strong>Menu</strong> + <strong>Permissões</strong> + <strong>Loja</strong> e clique em <strong>Salvar</strong>.</li>
+      <li>Após salvar, anote o <strong>login</strong> e a <strong>senha temporária</strong> exibidos pelo sistema.</li>
+    </ol>
+
+    <div class="warning">
+      <strong><i class="fa-solid fa-triangle-exclamation"></i> Atenção</strong><br/>
+      As credenciais aparecem imediatamente após salvar. No primeiro acesso, o usuário troca a senha.
+    </div>
+  </section>
+
+  <section id="sem-dms">
+    <h2><i class="fa-solid fa-user-xmark"></i> Usuário terceirizado / Sem vínculo com Dealer (DMS)</h2>
+    <p>Use para funções/terceiros que não existem no Dealer.</p>
+
+    <ol>
+      <li>Ao criar o usuário, clique em <strong>Cadastrar usuário sem vínculo ao DMS</strong>.</li>
+      <li>Confirme em <strong>Continuar sem vínculo</strong>.</li>
+      <li>Preencha manualmente: <strong>Login</strong>, <strong>Nome</strong>, <strong>E-mail (2FA)</strong>, <strong>Departamento</strong> e <strong>Cargo</strong>.</li>
+    </ol>
+
+    <div class="warning">
+      <strong>Limitações do usuário sem DMS:</strong>
+      <ul>
+        <li>Sem sincronização automática de status</li>
+        <li>Sem permissão para aplicar descontos</li>
+        <li>Filtro de vendas restrito</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="regras">
+    <h2><i class="fa-solid fa-scale-balanced"></i> Regras importantes</h2>
+
+    <div class="lilas-alert">
+      <strong>Regra Geral</strong>
+      Perfis que <strong>não são Vendedor</strong> devem ter a permissão <strong>39 – Visualizar Todas as Entregas</strong>.
     </div>
 
-    <!-- Vídeo formato computador (horizontal) -->
-    <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-mobile-screen-button"></i>
-        Versão Desktop
-      </div>
-     <div class="video-frame horizontal">
-  <iframe
-    src="https://player.vimeo.com/video/1152022036"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
+    <div class="warning">
+      <strong>Permissão 31 (Agendar/Registrar Entrega)</strong><br/>
+      Deixar ativa para vendedor apenas enquanto o autoagendamento do cliente não estiver liberado.
+      Depois, manter a 31 apenas para quem opera a entrega (ex.: entregador).
     </div>
-  </div>
-</div>
- <!-- GESTOR -->
- <div class="video-card">
-  <div class="video-header">
-    <h3><i class="fa-solid fa-circle-play"></i>
-    Gestor/ Key user</h3>
-  </div>
-    <!-- Vídeo formato computador (horizontal) -->
-    <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-desktop-screen-button"></i>
-        Versão Desktop
-      </div>
-     <div class="video-frame horizontal">
-  <iframe
-    src="https://player.vimeo.com/video/1152187318"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
-    </div>
-  </div>
-</div>
-<!--Agendamento-->
-  <div class="video-card">
-  <div class="video-header">
-    <h3><i class="fa-solid fa-circle-play"></i>
- Agendamento Manual</h3>   </div>
-
-  <div class="video-grid">
-    <!-- Vídeo formato celular (vertical) -->
-  <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-mobile-screen-button"></i>
-        Versão celular
-      </div>
-     <div class="video-frame vertical">
-  <iframe
-    src="https://player.vimeo.com/video/1152226737"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-    </div>
-
-    </div>
-  </div>
-</div>
- <!-- ENTREGADOR -->
-<div class="video-card">
-  <div class="video-header">
-    <h3><i class="fa-solid fa-circle-play"></i>
-Entrega Técnica</h3>  </div>
-
-  <div class="video-grid">
-    <!-- Vídeo formato celular (vertical) -->
-  <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-desktop-screen-button"></i>
-        Versão celular
-      </div>
-     <div class="video-frame vertical">
-  <iframe
-    src="https://player.vimeo.com/video/1152231601"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-    </div>
-
-    <!-- Vídeo formato computador (horizontal) -->
-    <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-desktop-screen-button"></i>
-        Versão Desktop
-      </div>
-     <div class="video-frame horizontal">
-  <iframe
-    src="https://player.vimeo.com/video/1152231643"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
-    </div>
-  </div>
-</div>
-
-
- <!-- SEGURO -->
-  <div class="video-card">
-  <div class="video-header">
-  <h3><i class="fa-solid fa-circle-play"></i>
-  Seguro</h3></div>
-  
-  
-  <div class="video-grid">
-    <!-- Vídeo formato celular (vertical) -->
-  <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-mobile-screen-button"></i>
-        Versão celular
-      </div>
-     <div class="video-frame vertical">
-  <iframe
-    src="https://player.vimeo.com/video/1152243380"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-    </div>
-
-    <!-- Vídeo formato computador (horizontal) -->
-    <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-desktop-screen-button"></i>
-        Versão Desktop
-      </div>
-     <div class="video-frame horizontal">
-  <iframe
-    src="https://player.vimeo.com/video/1152243248"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
-    </div>
-  </div>
-</div>
-
-
-<!-- ACESSORIOS -->
-  <div class="video-card">
-    
-  <div class="video-header"><h3><i class="fa-solid fa-circle-play"></i>
-    Acessórios</h3></div>    
-  <div class="video-grid">
-    <!-- Vídeo formato celular (vertical) -->
-  <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-mobile-screen-button"></i>
-        Versão celular
-      </div>
-     <div class="video-frame vertical">
-  <iframe
-    src="https://player.vimeo.com/video/1152244542"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-    </div>
-
-    <!-- Vídeo formato computador (horizontal) -->
-    <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-desktop-screen-button"></i>
-        Versão Desktop
-      </div>
-     <div class="video-frame horizontal">
-  <iframe
-    src="https://player.vimeo.com/video/1152244388"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
-    </div>
-  </div>
-</div>
-
-
-<!-- Embelezamento -->
-  <div class="video-card">
-  <div class="video-header"><h3><i class="fa-solid fa-circle-play"></i>
-    Embelezamento</h3></div>
-  <div class="video-grid">
-    <!-- Vídeo formato celular (vertical) -->
-  <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-mobile-screen-button"></i>
-        Versão celular
-      </div>
-     <div class="video-frame vertical">
-  <iframe
-    src="https://player.vimeo.com/video/1152247751"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-    </div>
-
-    <!-- Vídeo formato computador (horizontal) -->
-    <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-desktop-screen-button"></i>
-        Versão Desktop
-      </div>
-     <div class="video-frame horizontal">
-  <iframe
-    src="https://player.vimeo.com/video/1152247670"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
-    </div>
-  </div>
-</div>
-
-<!-- Melhorias -->
-  <div class="video-card">
-  <div class="video-header"><h3><i class="fa-solid fa-circle-play"></i>
-    Novidades</h3></div>
-  <div class="video-grid">
-    <!-- Vídeo formato celular (vertical) -->
-  <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-mobile-screen-button"></i>
-        Versão celular
-      </div>
-     <div class="video-frame vertical">
-  <iframe
-    src="https://player.vimeo.com/video/1152247751"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-    </div>
-
-    <!-- Vídeo formato computador (horizontal) -->
-    <div class="video-item">
-      <div class="video-label">
-        <i class="fa-solid fa-desktop-screen-button"></i>
-        Versão Desktop
-      </div>
-     <div class="video-frame horizontal">
-  <iframe
-    src="https://player.vimeo.com/video/1152247670"
-    width="100%"
-    height="360"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
-    </div>
-  </div>
-</div>
-</section>
-
+  </section>
 </main>
-
-<footer>
-  Manual Saga Conecta • Documento vivo para uso interno
-</footer>
 
 <!-- Box fixo: Atenção para credenciais -->
 <div class="sticky-alert" id="stickyAlert">
   <strong>⚠️ Atenção: anote a senha</strong>
-  <div class="hint">Após clicar em <strong>Salvar</strong>, o sistema mostra <strong>login</strong> e <strong>senha temporária</strong>. Registre e repasse ao usuário. No primeiro acesso, ele trocará a senha.</div>
-  <button onclick="document.getElementById('stickyAlert').style.display='none'">Entendi</button>
+  <div class="hint">
+    Após clicar em <strong>Salvar</strong>, o sistema mostra <strong>login</strong> e <strong>senha temporária</strong>.
+    Registre e repasse ao usuário. No primeiro acesso, ele trocará a senha.
+  </div>
+  <button class="btn" onclick="document.getElementById('stickyAlert').style.display='none'">Entendi</button>
 </div>
-
-
-<script>
-  // Jump select
-  (function () {
-    const jump = document.getElementById('jumpSelect');
-    if (jump) {
-      jump.addEventListener('change', () => {
-        const v = jump.value;
-        if (!v) return;
-        window.location.hash = v;
-        jump.value = '';
-      });
-    }
-  })();
-
-  // Search filter (filtra sections por texto)
-  (function () {
-    const input = document.getElementById('searchInput');
-    const clear = document.getElementById('clearSearch');
-    const sections = Array.from(document.querySelectorAll('main section'));
-
-    function normalize(s) {
-      return (s || '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-    }
-
-    function applyFilter(q) {
-      const query = normalize(q);
-      if (!query) {
-        sections.forEach(sec => sec.classList.remove('hidden'));
-        return;
-      }
-      sections.forEach(sec => {
-        const text = normalize(sec.innerText);
-        const match = text.includes(query);
-        sec.classList.toggle('hidden', !match);
-      });
-    }
-
-    if (input) {
-      input.addEventListener('input', () => applyFilter(input.value));
-    }
-
-    if (clear) {
-      clear.addEventListener('click', () => {
-        if (input) input.value = '';
-        applyFilter('');
-        if (input) input.focus();
-      });
-    }
-  })();
-</script>
-
-<!-- Botão voltar ao topo -->
-<button id="backToTop" title="Voltar ao topo">⬆ Voltar ao topo</button>
-
-<script>
-  // Botão Voltar ao Topo
-  const backToTop = document.getElementById('backToTop');
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) {
-      backToTop.style.display = 'block';
-    } else {
-      backToTop.style.display = 'none';
-    }
-  });
-
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-</script>
-
-<style>
-  #backToTop {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    z-index: 999;
-    background: #0b3a66;
-    color: #fff;
-    border: none;
-    border-radius: 999px;
-    padding: 12px 16px;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-  }
-
-  #backToTop:hover {
-    background: #092d50;
-  }
-</style>
 </body>
 </html>
