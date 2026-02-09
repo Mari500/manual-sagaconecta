@@ -1,0 +1,173 @@
+<!-- usuarios.html  |  Manual separado: Criação de Usuários -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <title>Saga Conecta • Criação de Usuários</title>
+
+  <style>
+    :root{
+      --primary:#F37021; --primary-700:#D85F1B;
+      --ink:#111827; --muted:#6B7280;
+      --bg:#F6F7FB; --card:#fff; --border:#E5E7EB;
+      --warn-bg:#FFFBEB; --warn-bd:#FDE68A;
+      --lilas-bg:#F3E8FF; --lilas-bd:#E9D5FF; --lilas-bar:#A855F7;
+    }
+    *{ box-sizing:border-box; }
+    body{ font-family: Arial, Helvetica, sans-serif; margin:0; background:var(--bg); color:var(--ink); }
+    header{
+      background:linear-gradient(135deg, var(--primary), #FF9A5A);
+      color:#fff; padding:26px 18px;
+    }
+    header .wrap{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; }
+    header h1{ margin:0; font-size:26px; }
+    header p{ margin:6px 0 0; opacity:.95; }
+
+    nav{
+      position:sticky; top:0; z-index:20;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:saturate(140%) blur(8px);
+      border-bottom:1px solid var(--border);
+      padding:10px 16px;
+    }
+    .nav-wrap{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    nav a{ text-decoration:none; font-weight:900; color:var(--ink); padding:8px 10px; border-radius:12px; }
+    nav a:hover{ background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+    .btn{
+      border:0; cursor:pointer; border-radius:12px;
+      padding:10px 12px; font-weight:900;
+      background:var(--primary); color:#fff;
+    }
+    .btn:hover{ background:var(--primary-700); }
+
+    main{ padding:24px; max-width:1100px; margin:auto; }
+    section{
+      scroll-margin-top:120px;
+      background:var(--card);
+      margin-bottom:18px;
+      padding:22px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      box-shadow:0 1px 8px rgba(0,0,0,.05);
+    }
+    h2{ margin:0 0 10px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+    .warning{ background:var(--warn-bg); border:1px solid var(--warn-bd); padding:12px; border-radius:12px; margin:12px 0; }
+    .lilas-alert{
+      background:var(--lilas-bg);
+      border:1px solid var(--lilas-bd);
+      border-left:6px solid var(--lilas-bar);
+      padding:14px; border-radius:12px; margin:14px 0;
+    }
+    .muted{ color:var(--muted); font-size:13px; }
+    ol, ul{ margin-left:20px; }
+    code{ background:#111827; color:#fff; padding:2px 6px; border-radius:8px; }
+
+    /* Box fixo “Atenção: anote a senha” */
+    .sticky-alert{
+      position:fixed; right:16px; bottom:16px; z-index:999;
+      width:min(420px, calc(100% - 32px));
+      background:var(--warn-bg);
+      border:1px solid var(--warn-bd);
+      border-left:6px solid #F59E0B;
+      border-radius:14px;
+      padding:12px 14px;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+    }
+    .sticky-alert strong{ display:block; margin-bottom:6px; }
+    .sticky-alert .hint{ font-size:13px; color:#4B5563; line-height:1.35; }
+
+    @media (max-width: 900px){
+      .sticky-alert{ left:16px; right:16px; }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap">
+    <img src="logo_saga.png" alt="Logo Saga" style="height:48px;" />
+    <div>
+      <h1>Criação de Usuários – Saga Conecta</h1>
+      <p>Manual operacional separado (cadastro, permissões, loja e credenciais).</p>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-wrap">
+    <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Voltar ao Portal</a>
+    <a href="#inicio"><i class="fa-solid fa-gear"></i> Como chegar</a>
+    <a href="#sem-dms"><i class="fa-solid fa-user-xmark"></i> Sem Dealer</a>
+    <a href="#regras"><i class="fa-solid fa-scale-balanced"></i> Regras</a>
+  </div>
+</nav>
+
+<main>
+  <section id="inicio">
+    <h2><i class="fa-solid fa-user-gear"></i> Configuração Inicial – Como chegar à criação de usuários</h2>
+    <p class="muted">Passo a passo comum antes de cadastrar qualquer perfil.</p>
+
+    <ol>
+      <li>Entre no Saga Conecta com usuário <strong>administrador</strong> ou com permissões completas.</li>
+      <li>No menu, acesse <strong>Configurações</strong>.</li>
+      <li>Clique em <strong>Cadastro de Usuário</strong>.</li>
+      <li>Clique em <strong>Criar Usuário</strong>.</li>
+      <li>Defina <strong>Menu</strong> + <strong>Permissões</strong> + <strong>Loja</strong> e clique em <strong>Salvar</strong>.</li>
+      <li>Após salvar, anote o <strong>login</strong> e a <strong>senha temporária</strong> exibidos pelo sistema.</li>
+    </ol>
+
+    <div class="warning">
+      <strong><i class="fa-solid fa-triangle-exclamation"></i> Atenção</strong><br/>
+      As credenciais aparecem imediatamente após salvar. No primeiro acesso, o usuário troca a senha.
+    </div>
+  </section>
+
+  <section id="sem-dms">
+    <h2><i class="fa-solid fa-user-xmark"></i> Usuário terceirizado / Sem vínculo com Dealer (DMS)</h2>
+    <p>Use para funções/terceiros que não existem no Dealer.</p>
+
+    <ol>
+      <li>Ao criar o usuário, clique em <strong>Cadastrar usuário sem vínculo ao DMS</strong>.</li>
+      <li>Confirme em <strong>Continuar sem vínculo</strong>.</li>
+      <li>Preencha manualmente: <strong>Login</strong>, <strong>Nome</strong>, <strong>E-mail (2FA)</strong>, <strong>Departamento</strong> e <strong>Cargo</strong>.</li>
+    </ol>
+
+    <div class="warning">
+      <strong>Limitações do usuário sem DMS:</strong>
+      <ul>
+        <li>Sem sincronização automática de status</li>
+        <li>Sem permissão para aplicar descontos</li>
+        <li>Filtro de vendas restrito</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="regras">
+    <h2><i class="fa-solid fa-scale-balanced"></i> Regras importantes</h2>
+
+    <div class="lilas-alert">
+      <strong>Regra Geral</strong>
+      Perfis que <strong>não são Vendedor</strong> devem ter a permissão <strong>39 – Visualizar Todas as Entregas</strong>.
+    </div>
+
+    <div class="warning">
+      <strong>Permissão 31 (Agendar/Registrar Entrega)</strong><br/>
+      Deixar ativa para vendedor apenas enquanto o autoagendamento do cliente não estiver liberado.
+      Depois, manter a 31 apenas para quem opera a entrega (ex.: entregador).
+    </div>
+  </section>
+</main>
+
+<!-- Box fixo: Atenção para credenciais -->
+<div class="sticky-alert" id="stickyAlert">
+  <strong>⚠️ Atenção: anote a senha</strong>
+  <div class="hint">
+    Após clicar em <strong>Salvar</strong>, o sistema mostra <strong>login</strong> e <strong>senha temporária</strong>.
+    Registre e repasse ao usuário. No primeiro acesso, ele trocará a senha.
+  </div>
+  <button class="btn" onclick="document.getElementById('stickyAlert').style.display='none'">Entendi</button>
+</div>
+</body>
+</html>
