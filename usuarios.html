@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Manual de criação de usuários do Saga Conecta." />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <title>Saga Conecta • Criação de Usuários</title>
+
+  <style>
+    :root{
+      --brand:#F37021;
+      --brand-700:#D85F1B;
+      --bg:#F6F7FB;
+      --card:#FFFFFF;
+      --text:#111827;
+      --muted:#6B7280;
+      --border:#E5E7EB;
+
+      --ok-bg:#ECFDF5; --ok-bd:#A7F3D0;
+      --warn-bg:#FFFBEB; --warn-bd:#FDE68A;
+      --lilas-bg:#F3E8FF; --lilas-bd:#E9D5FF; --lilas-bar:#A855F7;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      font-size:16px;
+      line-height:1.55;
+    }
+
+    .app{
+      display:grid;
+      grid-template-columns:280px 1fr;
+      min-height:100vh;
+    }
+
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      padding:18px;
+      border-right:1px solid var(--border);
+      background:rgba(255,255,255,.92);
+      backdrop-filter:saturate(140%) blur(8px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 10px 14px;
+      border-bottom:1px solid var(--border);
+      margin-bottom:14px;
+    }
+
+    .brand img{ height:40px; }
+
+    .brand .t1{
+      font-weight:900;
+      font-size:14px;
+      letter-spacing:.2px;
+    }
+
+    .brand .t2{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+    }
+
+    .menu{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin:10px 0 14px;
+    }
+
+    .menu a{
+      text-decoration:none;
+      color:var(--text);
+      font-weight:800;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+    }
+
+    .menu a:hover{
+      background:#fff;
+      border-color:var(--border);
+    }
+
+    .search{
+      display:flex;
+      gap:8px;
+      padding:10px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:#fff;
+      margin:12px 0 10px;
+    }
+
+    .search input{
+      border:0;
+      outline:none;
+      width:100%;
+      font-size:14px;
+    }
+
+    .btn{
+      border:0;
+      cursor:pointer;
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:900;
+      background:var(--brand);
+      color:#fff;
+    }
+
+    .btn:hover{ background:var(--brand-700); }
+
+    .jump{
+      width:100%;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:#fff;
+      font-weight:800;
+      margin-top:10px;
+    }
+
+    .group-title{
+      margin:14px 10px 8px;
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-weight:900;
+    }
+
+    .content{
+      padding:22px;
+    }
+
+    .content-wrap{
+      max-width:1100px;
+      margin:0 auto;
+    }
+
+    header{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:18px 18px 16px;
+      margin-bottom:18px;
+      box-shadow:0 1px 10px rgba(0,0,0,.05);
+    }
+
+    header h1{
+      margin:0;
+      font-size:22px;
+      letter-spacing:.2px;
+    }
+
+    header p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    section{
+      scroll-margin-top:16px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:18px;
+      margin-bottom:14px;
+      box-shadow:0 1px 10px rgba(0,0,0,.04);
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size:18px;
+      border-bottom:1px solid var(--border);
+      padding-bottom:10px;
+    }
+
+    h3{
+      margin:16px 0 8px;
+      font-size:15px;
+    }
+
+    p{ margin:8px 0; }
+    ul, ol{ margin:8px 0 0 18px; }
+
+    .muted{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+      background:#fff;
+    }
+
+    .card .title{
+      font-weight:900;
+      margin:0 0 6px;
+    }
+
+    .pill{
+      display:inline-block;
+      font-size:12px;
+      font-weight:900;
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(243,112,33,.10);
+      border:1px solid rgba(243,112,33,.25);
+      color:var(--brand-700);
+    }
+
+    .ok{
+      background:var(--ok-bg);
+      border:1px solid var(--ok-bd);
+      padding:12px;
+      border-radius:14px;
+      margin:12px 0;
+    }
+
+    .warning{
+      background:var(--warn-bg);
+      border:1px solid var(--warn-bd);
+      padding:12px;
+      border-radius:14px;
+      margin:12px 0;
+    }
+
+    .lilas-alert{
+      background:var(--lilas-bg);
+      border:1px solid var(--lilas-bd);
+      border-left:6px solid var(--lilas-bar);
+      padding:14px;
+      border-radius:14px;
+      margin:14px 0;
+    }
+
+    .lilas-alert strong{
+      display:block;
+      margin-bottom:6px;
+    }
+
+    .print-box{
+      border:2px dashed #D1D5DB;
+      border-radius:16px;
+      background:#FAFAFA;
+      padding:16px;
+      margin-top:12px;
+      color:var(--muted);
+      text-align:center;
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+    }
+
+    .sticky-alert{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      z-index:999;
+      width:min(420px, calc(100% - 32px));
+      background:var(--warn-bg);
+      border:1px solid var(--warn-bd);
+      border-left:6px solid #F59E0B;
+      border-radius:14px;
+      padding:12px 14px;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+    }
+
+    .sticky-alert strong{
+      display:block;
+      margin-bottom:6px;
+    }
+
+    .sticky-alert .hint{
+      font-size:13px;
+      color:#4B5563;
+      line-height:1.35;
+    }
+
+    #backToTop{
+      display:none;
+      position:fixed;
+      bottom:18px;
+      left:18px;
+      z-index:999;
+      background:var(--brand);
+      color:#fff;
+      border:none;
+      border-radius:999px;
+      padding:12px 16px;
+      cursor:pointer;
+      font-weight:900;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+    }
+
+    #backToTop:hover{
+      background:var(--brand-700);
+    }
+
+    .hidden{ display:none !important; }
+
+    @media (max-width: 980px){
+      .app{ grid-template-columns:1fr; }
+
+      .sidebar{
+        height:auto;
+        position:sticky;
+        top:0;
+        z-index:30;
+        border-right:0;
+        border-bottom:1px solid var(--border);
+      }
+
+      .menu{
+        flex-direction:row;
+        flex-wrap:wrap;
+      }
+
+      .grid-2{
+        grid-template-columns:1fr;
+      }
+
+      .sticky-alert{
+        left:16px;
+        right:16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="logo_saga.png" alt="Logo Saga" />
+        <div>
+          <div class="t1">Saga Conecta</div>
+          <div class="t2">Criação de usuários</div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Voltar ao portal</a>
+        <a href="#inicio">Como chegar</a>
+        <a href="#sem-dms">Sem Dealer</a>
+        <a href="#regras">Regras</a>
+        <a href="#perfis">Perfis e permissões</a>
+        <a href="#prints">Prints</a>
+      </div>
+
+      <div class="search">
+        <input id="searchInput" type="search" placeholder="Pesquisar na página..." />
+        <button id="clearSearch" class="btn" type="button">Limpar</button>
+      </div>
+
+      <div class="group-title">Atalho rápido</div>
+      <select id="jumpSelect" class="jump">
+        <option value="">Ir para…</option>
+        <option value="#inicio">Como chegar</option>
+        <option value="#sem-dms">Sem Dealer</option>
+        <option value="#regras">Regras</option>
+        <option value="#perfis">Perfis e permissões</option>
+        <option value="#prints">Prints</option>
+      </select>
+
+      <p class="muted" style="margin:12px 10px 0;">
+        Use esta página para cadastro técnico e configuração de permissões.
+      </p>
+    </aside>
+
+    <main class="content">
+      <div class="content-wrap">
+        <header>
+          <h1>Criação de Usuários <span class="pill">Manual técnico</span></h1>
+          <p>Passo a passo de cadastro, permissões, lojas e regras operacionais do Saga Conecta.</p>
+        </header>
+
+        <section id="inicio">
+          <h2><i class="fa-solid fa-user-gear"></i> Como chegar à criação de usuários</h2>
+          <p class="muted">Este passo a passo é comum para qualquer perfil que será criado manualmente.</p>
+
+          <ol>
+            <li>Entrar no <strong>Saga Conecta</strong> com um usuário administrador ou com permissões completas.</li>
+            <li>Confirmar que está na <strong>loja correta</strong>.</li>
+            <li>No menu principal, acessar <strong>Configurações</strong>.</li>
+            <li>Clicar em <strong>Cadastro de Usuário</strong>.</li>
+            <li>Clicar em <strong>Criar Usuário</strong>.</li>
+            <li>Definir <strong>menus</strong>, <strong>permissões</strong> e <strong>loja</strong>.</li>
+            <li>Clicar em <strong>Salvar</strong>.</li>
+          </ol>
+
+          <div class="warning">
+            <strong>Atenção:</strong> após salvar, o sistema exibe imediatamente o <strong>login</strong> e a <strong>senha temporária</strong> do usuário.
+          </div>
+        </section>
+
+        <section id="sem-dms">
+          <h2><i class="fa-solid fa-user-xmark"></i> Usuário sem vínculo com Dealer (DMS)</h2>
+          <p>Esse tipo de cadastro deve ser usado para colaboradores terceirizados ou usuários que não existem no Dealer.</p>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Prestadores de serviço</li>
+            <li>Empresas terceirizadas</li>
+            <li>Usuários operacionais sem cadastro no Dealer</li>
+          </ul>
+
+          <h3>Como cadastrar</h3>
+          <ol>
+            <li>Clicar em <strong>Cadastrar usuário sem vínculo ao DMS</strong>.</li>
+            <li>Confirmar em <strong>Continuar sem vínculo</strong>.</li>
+            <li>Preencher manualmente:
+              <ul>
+                <li>Login</li>
+                <li>Nome</li>
+                <li>E-mail (2FA)</li>
+                <li>Departamento</li>
+                <li>Cargo</li>
+              </ul>
+            </li>
+          </ol>
+
+          <div class="warning">
+            <strong>Limitações do usuário sem Dealer:</strong>
+            <ul>
+              <li>Não possui sincronização automática com o DMS</li>
+              <li>Não pode aplicar descontos em vendas</li>
+              <li>Possui filtro de vendas restrito</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="regras">
+          <h2><i class="fa-solid fa-scale-balanced"></i> Regras importantes</h2>
+
+          <div class="lilas-alert">
+            <strong>Regra geral de permissões</strong>
+            Todos os perfis que <strong>não são Vendedor</strong> devem possuir a permissão
+            <strong>39 – Visualizar Todas as Entregas</strong>.
+          </div>
+
+          <div class="warning">
+            <strong>Permissão 31 – Agendar/Registrar Entrega</strong><br/>
+            Deve ficar ativa para vendedor apenas enquanto o autoagendamento do cliente ainda não estiver liberado.
+            Após a liberação, manter essa permissão apenas para quem opera a entrega.
+          </div>
+
+          <div class="warning">
+            <strong>Financeiro / Faturista</strong><br/>
+            Esse perfil é criado automaticamente pelo <strong>Dealer (DMS)</strong> e não deve ser configurado manualmente no Saga Conecta.
+          </div>
+        </section>
+
+        <section id="perfis">
+          <h2><i class="fa-solid fa-users-gear"></i> Perfis e permissões</h2>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="title">Vendedor</div>
+              <p class="muted">Acompanha a entrega do cliente e pode agendar enquanto o autoagendamento não estiver liberado.</p>
+              <ul>
+                <li><strong>Menu:</strong> 29 – Agenda de Entrega</li>
+                <li><strong>Permissões:</strong> 35, 110, 125</li>
+              </ul>
+              <div class="warning">Não possui a permissão 39 – Visualizar Todas as Entregas.</div>
+            </div>
+
+            <div class="card">
+              <div class="title">Despachante</div>
+              <p class="muted">Responsável pela parte documental da entrega.</p>
+              <ul>
+                <li><strong>Menu:</strong> 29 – Agenda de Entrega</li>
+                <li><strong>Permissões:</strong> 39, 35, 110</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="title">Vendedora de Seguros</div>
+              <p class="muted">Atualiza a etapa de seguro e valida status antes da entrega.</p>
+              <ul>
+                <li><strong>Menu:</strong> 29 – Agenda de Entrega</li>
+                <li><strong>Permissões:</strong> 39, 40</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="title">Vendedor de Acessórios</div>
+              <p class="muted">Atualiza exclusivamente a etapa de acessórios.</p>
+              <ul>
+                <li><strong>Menu:</strong> 29 – Agenda de Entrega</li>
+                <li><strong>Permissões:</strong> 36, 39</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="title">Vendedor de Película</div>
+              <p class="muted">Atualiza exclusivamente a etapa de película.</p>
+              <ul>
+                <li><strong>Menu:</strong> 29 – Agenda de Entrega</li>
+                <li><strong>Permissões:</strong> 39, 129</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="title">Usuário de Revisão</div>
+              <p class="muted">Atualiza apenas a etapa de revisão.</p>
+              <ul>
+                <li><strong>Menu:</strong> 29 – Agenda de Entrega</li>
+                <li><strong>Permissões:</strong> 39, 41</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="title">Secretaria / Pátio</div>
+              <p class="muted">Marca que o veículo chegou ao pátio e inicia o fluxo operacional.</p>
+              <ul>
+                <li><strong>Menu:</strong> 29 – Agenda de Entrega</li>
+                <li><strong>Permissões:</strong> 39, 124</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="title">Entregador Técnico</div>
+              <p class="muted">Responsável por conduzir o fluxo operacional da entrega até a conclusão.</p>
+              <ul>
+                <li><strong>Menu:</strong> 29 – Agenda de Entrega</li>
+                <li><strong>Permissões:</strong> 31, 32, 33, 34, 38, 39, 41, 43, 44, 45, 47, 56, 93, 115, 125</li>
+              </ul>
+              <div class="lilas-alert">
+                <strong>Regra de conclusão</strong>
+                O Entregador Técnico não consegue concluir a entrega se as demais etapas não estiverem devidamente alimentadas.
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="title">Gestor / Diretor / Administrativo / Key User</div>
+              <p class="muted">Perfis com visão total e suporte operacional/gerencial.</p>
+              <ul>
+                <li><strong>Menu:</strong> 29 – Agenda de Entrega</li>
+                <li><strong>Permissões:</strong> todas</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="title">Financeiro / Faturista</div>
+              <p class="muted">Perfil automatizado via Dealer.</p>
+              <ul>
+                <li>Não configurar manualmente no Saga Conecta</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="prints">
+          <h2><i class="fa-solid fa-images"></i> Prints do processo</h2>
+          <p class="muted">Use esta área para colar os prints principais do cadastro e deixar o manual ainda mais didático.</p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="title">Print 1 — Tela inicial de cadastro</div>
+              <div class="print-box">Inserir print da tela “Criar Usuário” aqui</div>
+            </div>
+
+            <div class="card">
+              <div class="title">Print 2 — Cadastro sem vínculo com DMS</div>
+              <div class="print-box">Inserir print do modal “Continuar sem vínculo” aqui</div>
+            </div>
+
+            <div class="card">
+              <div class="title">Print 3 — Seleção de permissões</div>
+              <div class="print-box">Inserir print da tela de permissões aqui</div>
+            </div>
+
+            <div class="card">
+              <div class="title">Print 4 — Geração de credenciais</div>
+              <div class="print-box">Inserir print da tela com login e senha temporária aqui</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="sticky-alert" id="stickyAlert">
+    <strong>⚠️ Atenção: anote a senha</strong>
+    <div class="hint">
+      Após clicar em <strong>Salvar</strong>, o sistema mostra o <strong>login</strong> e a
+      <strong>senha temporária</strong>. Registre e repasse ao usuário.
+      No primeiro acesso, ele trocará a senha.
+    </div>
+    <button class="btn" onclick="document.getElementById('stickyAlert').style.display='none'">Entendi</button>
+  </div>
+
+  <button id="backToTop" title="Voltar ao topo">Topo</button>
+
+  <script>
+    (function () {
+      const jump = document.getElementById('jumpSelect');
+      if (!jump) return;
+      jump.addEventListener('change', () => {
+        if (!jump.value) return;
+        window.location.hash = jump.value;
+        jump.value = '';
+      });
+    })();
+
+    (function () {
+      const input = document.getElementById('searchInput');
+      const clear = document.getElementById('clearSearch');
+      const sections = Array.from(document.querySelectorAll('.content-wrap section'));
+
+      function normalize(s) {
+        return (s || '').toString().toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+      }
+
+      function applyFilter(q) {
+        const query = normalize(q);
+        if (!query) {
+          sections.forEach(sec => sec.classList.remove('hidden'));
+          return;
+        }
+        sections.forEach(sec => {
+          const text = normalize(sec.innerText);
+          sec.classList.toggle('hidden', !text.includes(query));
+        });
+      }
+
+      if (input) {
+        input.addEventListener('input', () => applyFilter(input.value));
+      }
+
+      if (clear) {
+        clear.addEventListener('click', () => {
+          if (input) input.value = '';
+          applyFilter('');
+          if (input) input.focus();
+        });
+      }
+    })();
+
+    (function(){
+      const btn = document.getElementById('backToTop');
+      window.addEventListener('scroll', () => {
+        btn.style.display = window.scrollY > 400 ? 'block' : 'none';
+      });
+      btn.addEventListener('click', () => {
+        window.scrollTo({ top:0, behavior:'smooth' });
+      });
+    })();
+  </script>
+</body>
+</html>
