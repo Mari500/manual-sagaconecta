@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="FAQ do Saga Conecta com dúvidas frequentes e acesso ao suporte." />
+  <meta name="description" content="FAQ premium do Saga Conecta com dúvidas frequentes, categorias e acesso ao suporte." />
   <title>Saga Conecta • FAQ</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
@@ -12,21 +12,18 @@
     :root{
       --brand:#F37021;
       --brand-dark:#D85F1B;
+      --brand-soft:#FFF7ED;
       --bg:#F6F7FB;
       --card:#FFFFFF;
       --text:#111827;
       --muted:#6B7280;
       --border:#E5E7EB;
-      --soft:#FFF7ED;
+      --shadow:0 12px 30px rgba(17, 24, 39, 0.06);
     }
 
-    *{
-      box-sizing:border-box;
-    }
+    *{ box-sizing:border-box; }
 
-    html{
-      scroll-behavior:smooth;
-    }
+    html{ scroll-behavior:smooth; }
 
     body{
       margin:0;
@@ -49,7 +46,8 @@
       height:100vh;
       padding:20px;
       border-right:1px solid var(--border);
-      background:#fff;
+      background:rgba(255,255,255,.94);
+      backdrop-filter: blur(10px);
     }
 
     .brand{
@@ -65,14 +63,14 @@
       height:40px;
     }
 
-    .brand strong{
-      display:block;
+    .brand .title{
+      font-weight:800;
       font-size:14px;
     }
 
-    .brand span{
-      color:var(--muted);
+    .brand .sub{
       font-size:12px;
+      color:var(--muted);
     }
 
     .menu{
@@ -87,16 +85,14 @@
       color:var(--text);
       font-weight:700;
       padding:10px 12px;
-      border-radius:10px;
+      border-radius:12px;
+      transition:.2s ease;
     }
 
-    .menu a:hover{
-      background:#F9FAFB;
-    }
-
+    .menu a:hover,
     .menu a.active{
-      background:var(--soft);
-      color:var(--brand-dark);
+      background:#fff;
+      box-shadow:0 1px 4px rgba(0,0,0,.05);
     }
 
     .content{
@@ -104,79 +100,195 @@
     }
 
     .container{
-      max-width:1050px;
+      max-width:1100px;
       margin:auto;
     }
 
-    header{
-      background:#fff;
+    .hero{
+      background:linear-gradient(135deg, #fff, #fff7ed);
       border:1px solid var(--border);
-      border-radius:18px;
-      padding:20px;
-      margin-bottom:18px;
-      box-shadow:0 1px 10px rgba(0,0,0,.04);
+      border-radius:24px;
+      padding:28px;
+      margin-bottom:20px;
+      box-shadow:var(--shadow);
     }
 
-    header h1{
+    .hero-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      font-weight:800;
+      color:var(--brand-dark);
+      background:var(--brand-soft);
+      padding:6px 10px;
+      border-radius:999px;
+      margin-bottom:14px;
+    }
+
+    .hero h1{
       margin:0;
-      font-size:24px;
+      font-size:30px;
+      line-height:1.2;
     }
 
-    header p{
-      margin:6px 0 0;
+    .hero p{
+      margin:10px 0 0;
       color:var(--muted);
+      max-width:720px;
     }
 
-    .search{
-      margin:18px 0;
+    .search-box{
+      margin-top:18px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
-    .search input{
-      width:100%;
-      padding:14px;
-      border-radius:12px;
+    .search-box input{
+      flex:1;
+      min-width:260px;
+      padding:14px 16px;
       border:1px solid var(--border);
-      font-size:14px;
-      outline:none;
+      border-radius:14px;
       background:#fff;
+      outline:none;
+      font-size:14px;
     }
 
-    .category{
-      margin-bottom:24px;
+    .btn{
+      border:0;
+      cursor:pointer;
+      border-radius:14px;
+      padding:14px 16px;
+      font-weight:800;
+      background:var(--brand);
+      color:#fff;
+      transition:.2s ease;
     }
 
-    .category-title{
+    .btn:hover{
+      background:var(--brand-dark);
+    }
+
+    .section{
+      margin-bottom:22px;
+    }
+
+    .section-title{
       display:flex;
       align-items:center;
       gap:10px;
-      font-size:18px;
+      font-size:20px;
       font-weight:800;
+      margin:0 0 14px;
+    }
+
+    .category-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:14px;
+    }
+
+    .category-card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:18px;
+      box-shadow:0 1px 8px rgba(0,0,0,.03);
+      transition:.2s ease;
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .category-card:hover{
+      transform:translateY(-2px);
+      box-shadow:var(--shadow);
+    }
+
+    .category-icon{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      background:var(--brand-soft);
+      color:var(--brand-dark);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      margin-bottom:12px;
+    }
+
+    .category-card h3{
+      margin:0 0 6px;
+      font-size:16px;
+    }
+
+    .category-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .top-questions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .quick-card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:18px;
+      box-shadow:0 1px 8px rgba(0,0,0,.03);
+    }
+
+    .quick-card h3{
+      margin:0 0 10px;
+      font-size:16px;
+    }
+
+    .quick-card ul{
+      margin:0;
+      padding-left:18px;
+      color:#374151;
+    }
+
+    .faq-category{
+      margin-top:26px;
+    }
+
+    .faq-category h2{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:20px;
       margin:0 0 12px;
-      padding-bottom:10px;
-      border-bottom:1px solid var(--border);
     }
 
     .faq-item{
       background:#fff;
       border:1px solid var(--border);
-      border-radius:14px;
+      border-radius:16px;
       margin-bottom:10px;
       overflow:hidden;
       box-shadow:0 1px 8px rgba(0,0,0,.03);
     }
 
     .faq-question{
-      padding:14px 16px;
+      padding:16px 18px;
       cursor:pointer;
       font-weight:700;
       display:flex;
       justify-content:space-between;
       align-items:center;
       gap:14px;
+      background:#fff;
     }
 
     .faq-question:hover{
-      background:#FAFAFA;
+      background:#fafafa;
     }
 
     .faq-question i{
@@ -191,51 +303,59 @@
 
     .faq-answer{
       display:none;
-      padding:14px 16px 16px;
-      border-top:1px solid var(--border);
+      padding:0 18px 18px;
       color:#374151;
+      border-top:1px solid var(--border);
       background:#fff;
     }
 
-    .faq-item.open .faq-answer{
-      display:block;
+    .faq-answer p{
+      margin:14px 0 0;
     }
 
     .faq-answer ul{
       margin:10px 0 0 18px;
     }
 
+    .faq-item.open .faq-answer{
+      display:block;
+    }
+
     .support-box{
-      margin-top:30px;
-      background:#fff;
+      margin-top:28px;
+      background:linear-gradient(135deg, #fff, #fff7ed);
       border:1px solid #FDBA74;
-      padding:22px;
-      border-radius:18px;
+      border-radius:24px;
+      padding:26px;
       text-align:center;
-      box-shadow:0 1px 10px rgba(0,0,0,.04);
+      box-shadow:var(--shadow);
     }
 
     .support-box h3{
       margin:0 0 8px;
-      font-size:20px;
+      font-size:24px;
     }
 
     .support-box p{
       margin:0;
       color:var(--muted);
+      max-width:680px;
+      margin-left:auto;
+      margin-right:auto;
     }
 
     .support-btn{
       display:inline-flex;
       align-items:center;
       gap:10px;
-      margin-top:16px;
+      margin-top:18px;
       background:var(--brand);
       color:#fff;
-      padding:12px 18px;
-      border-radius:12px;
+      padding:14px 20px;
+      border-radius:14px;
       text-decoration:none;
       font-weight:800;
+      transition:.2s ease;
     }
 
     .support-btn:hover{
@@ -266,7 +386,17 @@
       background:var(--brand-dark);
     }
 
-    @media (max-width: 980px){
+    @media (max-width: 1024px){
+      .category-grid{
+        grid-template-columns:repeat(2, 1fr);
+      }
+
+      .top-questions{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 900px){
       .app{
         grid-template-columns:1fr;
       }
@@ -288,6 +418,14 @@
       .content{
         padding:18px;
       }
+
+      .hero h1{
+        font-size:24px;
+      }
+
+      .category-grid{
+        grid-template-columns:1fr;
+      }
     }
   </style>
 </head>
@@ -298,8 +436,8 @@
       <div class="brand">
         <img src="logo_saga.png" alt="Logo Saga" />
         <div>
-          <strong>Saga Conecta</strong>
-          <span>Dúvidas frequentes</span>
+          <div class="title">Saga Conecta</div>
+          <div class="sub">FAQ e suporte</div>
         </div>
       </div>
 
@@ -311,6 +449,8 @@
       </nav>
 
       <nav class="menu">
+        <a href="#categorias">Categorias</a>
+        <a href="#mais-acessadas">Mais acessadas</a>
         <a href="#agendamento">Agendamento</a>
         <a href="#entrega">Entrega</a>
         <a href="#usuarios">Usuários</a>
@@ -322,17 +462,85 @@
     <main class="content">
       <div class="container">
 
-        <header>
-          <h1>FAQ — Dúvidas Frequentes</h1>
-          <p>Perguntas comuns sobre uso do Saga Conecta dentro das concessionárias.</p>
-        </header>
+        <section class="hero">
+          <div class="hero-badge">
+            <i class="fa-solid fa-circle-question"></i>
+            Central de dúvidas
+          </div>
 
-        <div class="search">
-          <input id="faqSearch" type="text" placeholder="Pesquisar dúvida por palavra-chave..." />
-        </div>
+          <h1>FAQ do Saga Conecta</h1>
+          <p>
+            Encontre rapidamente respostas para as dúvidas mais comuns sobre agendamento, entrega, usuários, permissões e uso do sistema.
+          </p>
 
-        <section class="category" id="agendamento">
-          <h2 class="category-title"><i class="fa-solid fa-calendar-check"></i> Agendamento</h2>
+          <div class="search-box">
+            <input id="faqSearch" type="text" placeholder="Pesquisar por palavra-chave, perfil ou etapa..." />
+            <button id="clearSearch" class="btn" type="button">Limpar busca</button>
+          </div>
+        </section>
+
+        <section class="section" id="categorias">
+          <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> Categorias</h2>
+
+          <div class="category-grid">
+            <a class="category-card" href="#agendamento">
+              <div class="category-icon"><i class="fa-solid fa-calendar-check"></i></div>
+              <h3>Agendamento</h3>
+              <p>Quando o cliente pode agendar, travas e regras do processo.</p>
+            </a>
+
+            <a class="category-card" href="#entrega">
+              <div class="category-icon"><i class="fa-solid fa-car-side"></i></div>
+              <h3>Entrega</h3>
+              <p>Finalização, etapas pendentes e conclusão da entrega técnica.</p>
+            </a>
+
+            <a class="category-card" href="#usuarios">
+              <div class="category-icon"><i class="fa-solid fa-users"></i></div>
+              <h3>Usuários</h3>
+              <p>Perfis, permissões, senha e cadastro com ou sem Dealer.</p>
+            </a>
+
+            <a class="category-card" href="#sistema">
+              <div class="category-icon"><i class="fa-solid fa-desktop"></i></div>
+              <h3>Sistema</h3>
+              <p>Comportamento do Saga Conecta, notificações e etapas do fluxo.</p>
+            </a>
+
+            <a class="category-card" href="#suporte">
+              <div class="category-icon"><i class="fa-solid fa-headset"></i></div>
+              <h3>Suporte</h3>
+              <p>Quando abrir chamado e como pedir ajuda para o time responsável.</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="section" id="mais-acessadas">
+          <h2 class="section-title"><i class="fa-solid fa-fire"></i> Dúvidas mais acessadas</h2>
+
+          <div class="top-questions">
+            <div class="quick-card">
+              <h3>Quando o cliente pode agendar a entrega?</h3>
+              <ul>
+                <li>Faturamento realizado</li>
+                <li>Veículo no pátio</li>
+                <li>Documentação encaminhada para o despachante</li>
+              </ul>
+            </div>
+
+            <div class="quick-card">
+              <h3>Por que não consigo concluir a entrega?</h3>
+              <ul>
+                <li>Alguma etapa ainda não foi preenchida</li>
+                <li>Seguro, acessórios, estética ou revisão podem estar pendentes</li>
+                <li>O entregador técnico depende do fluxo completo</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="faq-category" id="agendamento">
+          <h2><i class="fa-solid fa-calendar-check"></i> Agendamento</h2>
 
           <div class="faq-item">
             <div class="faq-question">
@@ -340,7 +548,7 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              O cliente só consegue realizar o agendamento após a liberação das travas operacionais:
+              <p>O cliente só consegue realizar o agendamento após a liberação das travas operacionais.</p>
               <ul>
                 <li>Faturamento realizado</li>
                 <li>Veículo no pátio</li>
@@ -351,17 +559,17 @@
 
           <div class="faq-item">
             <div class="faq-question">
-              Quem agenda a entrega antes do autoagendamento do cliente?
+              Quem agenda a entrega antes da liberação do autoagendamento?
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              Antes da liberação do autoagendamento, a entrega pode ser agendada manualmente pelo time responsável, conforme o perfil configurado na loja.
+              <p>Antes da liberação do autoagendamento, o agendamento pode ser feito manualmente pelo time responsável, conforme o perfil configurado na loja.</p>
             </div>
           </div>
         </section>
 
-        <section class="category" id="entrega">
-          <h2 class="category-title"><i class="fa-solid fa-car-side"></i> Entrega</h2>
+        <section class="faq-category" id="entrega">
+          <h2><i class="fa-solid fa-car-side"></i> Entrega</h2>
 
           <div class="faq-item">
             <div class="faq-question">
@@ -369,7 +577,7 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              A entrega técnica só pode ser concluída quando todas as etapas anteriores do processo estiverem preenchidas no sistema.
+              <p>A entrega técnica só pode ser concluída quando todas as etapas anteriores estiverem devidamente preenchidas no sistema.</p>
               <ul>
                 <li>Documentação</li>
                 <li>Seguro</li>
@@ -386,17 +594,14 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              A função <strong>Baixar Entregas</strong> serve para remover da lista operacional veículos que já foram entregues ao cliente.
-              <br><br>
-              Caminho:
-              <br>
-              Lista → Baixar Entregas → selecionar entregas → confirmar baixar entregas.
+              <p>A função <strong>Baixar Entregas</strong> serve para remover da lista operacional os veículos que já foram entregues ao cliente.</p>
+              <p><strong>Caminho:</strong><br/>Lista → Baixar Entregas → selecionar entregas → confirmar baixar entregas.</p>
             </div>
           </div>
         </section>
 
-        <section class="category" id="usuarios">
-          <h2 class="category-title"><i class="fa-solid fa-users"></i> Usuários e permissões</h2>
+        <section class="faq-category" id="usuarios">
+          <h2><i class="fa-solid fa-users"></i> Usuários e permissões</h2>
 
           <div class="faq-item">
             <div class="faq-question">
@@ -404,9 +609,7 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              Todos os usuários que possuem a permissão <strong>39 – Visualizar Todas as Entregas</strong>.
-              <br><br>
-              Exemplo de perfis:
+              <p>Todos os usuários que possuem a permissão <strong>39 – Visualizar Todas as Entregas</strong>.</p>
               <ul>
                 <li>Gestores</li>
                 <li>Qualidade</li>
@@ -424,9 +627,8 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              Sim. Esse tipo de cadastro deve ser usado para usuários terceirizados ou pessoas sem vínculo com o DMS.
-              <br><br>
-              Porém, esse perfil possui limitações, como ausência de sincronização automática e restrições em algumas funções.
+              <p>Sim. O cadastro sem vínculo com Dealer deve ser usado para usuários terceirizados ou sem vínculo com o DMS.</p>
+              <p>Esse tipo de usuário possui limitações, como ausência de sincronização automática e restrições em algumas funções.</p>
             </div>
           </div>
 
@@ -436,13 +638,13 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              Solicite a redefinição ao responsável pelo cadastro de usuários da loja ou abra um chamado no suporte.
+              <p>Solicite a redefinição ao responsável pelo cadastro de usuários da loja ou abra um chamado no suporte.</p>
             </div>
           </div>
         </section>
 
-        <section class="category" id="sistema">
-          <h2 class="category-title"><i class="fa-solid fa-desktop"></i> Sistema</h2>
+        <section class="faq-category" id="sistema">
+          <h2><i class="fa-solid fa-desktop"></i> Sistema</h2>
 
           <div class="faq-item">
             <div class="faq-question">
@@ -450,8 +652,8 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              Quando uma área não atualiza sua etapa, o fluxo pode ficar travado e impedir a conclusão da entrega.
-              Por isso, cada persona deve registrar corretamente o seu status no sistema.
+              <p>Quando uma área não atualiza sua etapa, o fluxo pode ficar travado e impedir a conclusão da entrega.</p>
+              <p>Cada persona deve registrar corretamente seu status no sistema para manter o processo fluindo.</p>
             </div>
           </div>
 
@@ -461,17 +663,19 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              Não. As notificações do Saga Conecta são personalizáveis. É possível definir quais mensagens o cliente recebe e também o conteúdo de cada comunicação.
+              <p>Não. As notificações do Saga Conecta são personalizáveis. É possível definir quais mensagens o cliente recebe e também o conteúdo de cada comunicação.</p>
             </div>
           </div>
         </section>
 
-        <section class="category" id="suporte">
-          <h2 class="category-title"><i class="fa-solid fa-headset"></i> Suporte</h2>
+        <section class="faq-category" id="suporte">
+          <h2><i class="fa-solid fa-headset"></i> Suporte</h2>
 
           <div class="support-box">
             <h3>Não encontrou sua dúvida?</h3>
-            <p>Abra um chamado no suporte Saga Conecta para receber atendimento.</p>
+            <p>
+              Abra um chamado no suporte Saga Conecta para receber atendimento do time responsável.
+            </p>
 
             <a
               class="support-btn"
@@ -500,14 +704,30 @@
     });
 
     const search = document.getElementById("faqSearch");
+    const clearBtn = document.getElementById("clearSearch");
+
+    function normalize(str){
+      return (str || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
 
     search.addEventListener("keyup", function () {
-      const term = this.value.toLowerCase();
+      const term = normalize(this.value);
 
       document.querySelectorAll(".faq-item").forEach(item => {
-        const text = item.innerText.toLowerCase();
+        const text = normalize(item.innerText);
         item.classList.toggle("hidden", !text.includes(term));
       });
+    });
+
+    clearBtn.addEventListener("click", function(){
+      search.value = "";
+      document.querySelectorAll(".faq-item").forEach(item => {
+        item.classList.remove("hidden");
+      });
+      search.focus();
     });
 
     (function(){
