@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Biblioteca de vídeos do Saga Conecta." />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <title>Saga Conecta • Vídeos</title>
+
+  <style>
+    :root{
+      --brand:#F37021;
+      --brand-700:#D85F1B;
+      --bg:#F6F7FB;
+      --card:#FFFFFF;
+      --text:#111827;
+      --muted:#6B7280;
+      --border:#E5E7EB;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      font-size:16px;
+      line-height:1.55;
+    }
+
+    .app{
+      display:grid;
+      grid-template-columns:280px 1fr;
+      min-height:100vh;
+    }
+
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      padding:18px;
+      border-right:1px solid var(--border);
+      background:rgba(255,255,255,.92);
+      backdrop-filter:saturate(140%) blur(8px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 10px 14px;
+      border-bottom:1px solid var(--border);
+      margin-bottom:14px;
+    }
+
+    .brand img{ height:40px; }
+
+    .brand .t1{
+      font-weight:900;
+      font-size:14px;
+      letter-spacing:.2px;
+    }
+
+    .brand .t2{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+    }
+
+    .menu{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin:10px 0 14px;
+    }
+
+    .menu a{
+      text-decoration:none;
+      color:var(--text);
+      font-weight:800;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+    }
+
+    .menu a:hover{
+      background:#fff;
+      border-color:var(--border);
+    }
+
+    .search{
+      display:flex;
+      gap:8px;
+      padding:10px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:#fff;
+      margin:12px 0 10px;
+    }
+
+    .search input{
+      border:0;
+      outline:none;
+      width:100%;
+      font-size:14px;
+    }
+
+    .btn{
+      border:0;
+      cursor:pointer;
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:900;
+      background:var(--brand);
+      color:#fff;
+    }
+
+    .btn:hover{
+      background:var(--brand-700);
+    }
+
+    .jump{
+      width:100%;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:#fff;
+      font-weight:800;
+      margin-top:10px;
+    }
+
+    .group-title{
+      margin:14px 10px 8px;
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-weight:900;
+    }
+
+    .content{
+      padding:22px;
+    }
+
+    .content-wrap{
+      max-width:1100px;
+      margin:0 auto;
+    }
+
+    header{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:18px 18px 16px;
+      margin-bottom:18px;
+      box-shadow:0 1px 10px rgba(0,0,0,.05);
+    }
+
+    header h1{
+      margin:0;
+      font-size:22px;
+      letter-spacing:.2px;
+    }
+
+    header p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    section{
+      scroll-margin-top:16px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:18px;
+      margin-bottom:14px;
+      box-shadow:0 1px 10px rgba(0,0,0,.04);
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size:18px;
+      border-bottom:1px solid var(--border);
+      padding-bottom:10px;
+    }
+
+    .muted{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .video-card{
+      background:#FAFAFD;
+      border:1px solid var(--border);
+      padding:14px;
+      border-radius:16px;
+      margin:12px 0;
+    }
+
+    .video-title{
+      font-weight:900;
+      margin:0 0 10px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .video-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      align-items:start;
+    }
+
+    .video-item{
+      text-align:left;
+    }
+
+    .video-label{
+      font-weight:900;
+      margin:6px 0 10px;
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .video-frame{
+      background:#000;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid var(--border);
+    }
+
+    .video-frame.horizontal iframe{
+      width:100%;
+      height:360px;
+    }
+
+    .video-frame.vertical{
+      max-width:280px;
+      margin:0 auto;
+    }
+
+    .video-frame.vertical iframe{
+      width:100%;
+      height:360px;
+    }
+
+    #backToTop{
+      display:none;
+      position:fixed;
+      bottom:18px;
+      left:18px;
+      z-index:999;
+      background:var(--brand);
+      color:#fff;
+      border:none;
+      border-radius:999px;
+      padding:12px 16px;
+      cursor:pointer;
+      font-weight:900;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+    }
+
+    #backToTop:hover{
+      background:var(--brand-700);
+    }
+
+    .hidden{ display:none !important; }
+
+    @media (max-width: 980px){
+      .app{
+        grid-template-columns:1fr;
+      }
+
+      .sidebar{
+        height:auto;
+        position:sticky;
+        top:0;
+        z-index:30;
+        border-right:0;
+        border-bottom:1px solid var(--border);
+      }
+
+      .menu{
+        flex-direction:row;
+        flex-wrap:wrap;
+      }
+
+      .video-grid{
+        grid-template-columns:1fr;
+      }
+
+      .video-frame.vertical{
+        max-width:320px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="logo_saga.png" alt="Logo Saga" />
+        <div>
+          <div class="t1">Saga Conecta</div>
+          <div class="t2">Biblioteca de vídeos</div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Voltar ao portal</a>
+        <a href="#geral">Visão geral</a>
+        <a href="#gestor">Gestor / Key User</a>
+        <a href="#agendamento">Agendamento</a>
+        <a href="#entrega">Entrega técnica</a>
+        <a href="#seguro">Seguro</a>
+        <a href="#acessorios">Acessórios</a>
+        <a href="#embelezamento">Embelezamento</a>
+      </div>
+
+      <div class="search">
+        <input id="searchInput" type="search" placeholder="Pesquisar vídeo..." />
+        <button id="clearSearch" class="btn" type="button">Limpar</button>
+      </div>
+
+      <div class="group-title">Atalho rápido</div>
+      <select id="jumpSelect" class="jump">
+        <option value="">Ir para…</option>
+        <option value="#geral">Visão geral</option>
+        <option value="#gestor">Gestor / Key User</option>
+        <option value="#agendamento">Agendamento</option>
+        <option value="#entrega">Entrega técnica</option>
+        <option value="#seguro">Seguro</option>
+        <option value="#acessorios">Acessórios</option>
+        <option value="#embelezamento">Embelezamento</option>
+      </select>
+
+      <p class="muted" style="margin:12px 10px 0;">
+        Vídeos organizados por perfil e funcionalidade.
+      </p>
+    </aside>
+
+    <main class="content">
+      <div class="content-wrap">
+        <header>
+          <h1>Biblioteca de Vídeos</h1>
+          <p>Conteúdos rápidos de apoio para uso do Saga Conecta por perfil e funcionalidade.</p>
+        </header>
+
+        <section id="geral">
+          <h2><i class="fa-solid fa-circle-play"></i> Visão Geral do Saga Conecta</h2>
+          <p class="muted">Vídeos introdutórios do app em versão celular e desktop.</p>
+
+          <div class="video-card">
+            <div class="video-grid">
+              <div class="video-item">
+                <div class="video-label">
+                  <i class="fa-solid fa-mobile-screen-button"></i>
+                  Versão celular
+                </div>
+                <div class="video-frame vertical">
+                  <iframe src="https://player.vimeo.com/video/1152026208" frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+
+              <div class="video-item">
+                <div class="video-label">
+                  <i class="fa-solid fa-desktop"></i>
+                  Versão desktop
+                </div>
+                <div class="video-frame horizontal">
+                  <iframe src="https://player.vimeo.com/video/1152022036" frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="gestor">
+          <h2><i class="fa-solid fa-user-tie"></i> Gestor / Key User</h2>
+
+          <div class="video-card">
+            <div class="video-label">
+              <i class="fa-solid fa-desktop"></i>
+              Versão desktop
+            </div>
+            <div class="video-frame horizontal">
+              <iframe src="https://player.vimeo.com/video/1152187318" frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </section>
+
+        <section id="agendamento">
+          <h2><i class="fa-solid fa-calendar-check"></i> Agendamento Manual</h2>
+
+          <div class="video-card">
+            <div class="video-label">
+              <i class="fa-solid fa-mobile-screen-button"></i>
+              Versão celular
+            </div>
+            <div class="video-frame vertical">
+              <iframe src="https://player.vimeo.com/video/1152226737" frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </section>
+
+        <section id="entrega">
+          <h2><i class="fa-solid fa-car-side"></i> Entrega Técnica</h2>
+
+          <div class="video-card">
+            <div class="video-grid">
+              <div class="video-item">
+                <div class="video-label">
+                  <i class="fa-solid fa-mobile-screen-button"></i>
+                  Versão celular
+                </div>
+                <div class="video-frame vertical">
+                  <iframe src="https://player.vimeo.com/video/1152231601" frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+
+              <div class="video-item">
+                <div class="video-label">
+                  <i class="fa-solid fa-desktop"></i>
+                  Versão desktop
+                </div>
+                <div class="video-frame horizontal">
+                  <iframe src="https://player.vimeo.com/video/1152231643" frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="seguro">
+          <h2><i class="fa-solid fa-shield-halved"></i> Seguro</h2>
+
+          <div class="video-card">
+            <div class="video-grid">
+              <div class="video-item">
+                <div class="video-label">
+                  <i class="fa-solid fa-mobile-screen-button"></i>
+                  Versão celular
+                </div>
+                <div class="video-frame vertical">
+                  <iframe src="https://player.vimeo.com/video/1152243380" frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+
+              <div class="video-item">
+                <div class="video-label">
+                  <i class="fa-solid fa-desktop"></i>
+                  Versão desktop
+                </div>
+                <div class="video-frame horizontal">
+                  <iframe src="https://player.vimeo.com/video/1152243248" frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="acessorios">
+          <h2><i class="fa-solid fa-boxes-stacked"></i> Acessórios</h2>
+
+          <div class="video-card">
+            <div class="video-grid">
+              <div class="video-item">
+                <div class="video-label">
+                  <i class="fa-solid fa-mobile-screen-button"></i>
+                  Versão celular
+                </div>
+                <div class="video-frame vertical">
+                  <iframe src="https://player.vimeo.com/video/1152244542" frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+
+              <div class="video-item">
+                <div class="video-label">
+                  <i class="fa-solid fa-desktop"></i>
+                  Versão desktop
+                </div>
+                <div class="video-frame horizontal">
+                  <iframe src="https://player.vimeo.com/video/1152244388" frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="embelezamento">
+          <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Embelezamento</h2>
+
+          <div class="video-card">
+            <div class="video-grid">
+              <div class="video-item">
+                <div class="video-label">
+                  <i class="fa-solid fa-mobile-screen-button"></i>
+                  Versão celular
+                </div>
+                <div class="video-frame vertical">
+                  <iframe src="https://player.vimeo.com/video/1152247751" frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+
+              <div class="video-item">
+                <div class="video-label">
+                  <i class="fa-solid fa-desktop"></i>
+                  Versão desktop
+                </div>
+                <div class="video-frame horizontal">
+                  <iframe src="https://player.vimeo.com/video/1152247670" frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <button id="backToTop" title="Voltar ao topo">Topo</button>
+
+  <script>
+    (function () {
+      const jump = document.getElementById('jumpSelect');
+      if (!jump) return;
+      jump.addEventListener('change', () => {
+        if (!jump.value) return;
+        window.location.hash = jump.value;
+        jump.value = '';
+      });
+    })();
+
+    (function () {
+      const input = document.getElementById('searchInput');
+      const clear = document.getElementById('clearSearch');
+      const sections = Array.from(document.querySelectorAll('.content-wrap section'));
+
+      function normalize(s) {
+        return (s || '').toString().toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+      }
+
+      function applyFilter(q) {
+        const query = normalize(q);
+        if (!query) {
+          sections.forEach(sec => sec.classList.remove('hidden'));
+          return;
+        }
+        sections.forEach(sec => {
+          const text = normalize(sec.innerText);
+          sec.classList.toggle('hidden', !text.includes(query));
+        });
+      }
+
+      if (input) {
+        input.addEventListener('input', () => applyFilter(input.value));
+      }
+
+      if (clear) {
+        clear.addEventListener('click', () => {
+          if (input) input.value = '';
+          applyFilter('');
+          if (input) input.focus();
+        });
+      }
+    })();
+
+    (function(){
+      const btn = document.getElementById('backToTop');
+      window.addEventListener('scroll', () => {
+        btn.style.display = window.scrollY > 400 ? 'block' : 'none';
+      });
+      btn.addEventListener('click', () => {
+        window.scrollTo({ top:0, behavior:'smooth' });
+      });
+    })();
+  </script>
+</body>
+</html>
