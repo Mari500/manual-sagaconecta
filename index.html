@@ -1,570 +1,630 @@
-<!-- index.html  |  Portal Saga Conecta (Case + Treinamentos) -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Portal oficial de apoio e treinamentos do Saga Conecta (Grupo Saga)." />
+  <meta name="description" content="Portal oficial do Saga Conecta com visão geral, papéis, fluxos e acesso rápido aos materiais de apoio." />
+  <title>Saga Conecta • Portal</title>
 
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
-  <!-- (Opcional) Favicon -->
-  <!-- <link rel="icon" href="favicon.ico" /> -->
-
-  <title>Saga Conecta • Portal (Case + Treinamentos)</title>
 
   <style>
     :root{
-      /* Paleta Saga Conecta (ajustável) */
-      --primary:#F37021;        /* laranja Saga */
-      --primary-700:#D85F1B;
-      --ink:#111827;
-      --muted:#6B7280;
+      --brand:#F37021;
+      --brand-dark:#D85F1B;
+      --brand-soft:#FFF7ED;
       --bg:#F6F7FB;
       --card:#FFFFFF;
+      --text:#111827;
+      --muted:#6B7280;
       --border:#E5E7EB;
+      --shadow:0 12px 30px rgba(17, 24, 39, 0.06);
 
-      --ok-bg:#ECFDF5; --ok-bd:#A7F3D0;
-      --warn-bg:#FFFBEB; --warn-bd:#FDE68A;
-      --lilas-bg:#F3E8FF; --lilas-bd:#E9D5FF; --lilas-bar:#A855F7;
+      --ok-bg:#ECFDF5;
+      --ok-bd:#A7F3D0;
+
+      --warn-bg:#FFFBEB;
+      --warn-bd:#FDE68A;
+
+      --lilas-bg:#F3E8FF;
+      --lilas-bd:#E9D5FF;
+      --lilas-bar:#A855F7;
     }
 
     *{ box-sizing:border-box; }
-    body{ font-family: Arial, Helvetica, sans-serif; margin:0; background:var(--bg); color:var(--ink); }
+    html{ scroll-behavior:smooth; }
 
-    header{
-      background:linear-gradient(135deg, var(--primary), #FF9A5A);
-      color:#fff; padding:26px 18px;
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      font-size:16px;
+      line-height:1.55;
     }
-    header .wrap{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; }
-    header h1{ margin:0; font-size:26px; }
-    header p{ margin:6px 0 0; opacity:.95; }
 
-    nav{
-      position:sticky; top:0; z-index:20;
-      background:rgba(255,255,255,.92);
-      backdrop-filter:saturate(140%) blur(8px);
+    .app{
+      display:grid;
+      grid-template-columns:280px 1fr;
+      min-height:100vh;
+    }
+
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      padding:20px;
+      border-right:1px solid var(--border);
+      background:rgba(255,255,255,.94);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
       border-bottom:1px solid var(--border);
-      padding:10px 16px;
+      padding-bottom:14px;
+      margin-bottom:16px;
     }
 
-    .nav-wrap{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
-    .nav-left{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-    .nav-left a{
-      color:var(--ink); text-decoration:none; font-weight:800; white-space:nowrap;
-      padding:8px 10px; border-radius:10px;
-    }
-    .nav-left a:hover{ background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.06); }
-    .nav-left a.active{ background:#fff; outline:2px solid rgba(243,112,33,.25); }
-
-    .nav-right{ display:flex; align-items:center; gap:10px; margin-left:auto; flex-wrap:wrap; }
-    .nav-search{ display:flex; align-items:center; gap:8px; }
-    .nav-search input{
-      width:min(460px, 70vw);
-      padding:10px 12px;
-      border:1px solid var(--border);
-      border-radius:12px;
-      outline:none;
-    }
-    .btn{
-      border:0; cursor:pointer; border-radius:12px;
-      padding:10px 12px; font-weight:800;
-      background:var(--primary); color:#fff;
-    }
-    .btn:hover{ background:var(--primary-700); }
-
-    #jumpSelect{
-      padding:10px 12px;
-      border:1px solid var(--border);
-      border-radius:12px;
-      background:#fff;
-      font-weight:700;
+    .brand img{
+      height:40px;
     }
 
-    main{ padding:24px; max-width:1100px; margin:auto; }
-    section{
-      scroll-margin-top:120px;
-      background:var(--card);
-      margin-bottom:18px;
-      padding:22px;
-      border-radius:16px;
-      border:1px solid var(--border);
-      box-shadow:0 1px 8px rgba(0,0,0,.05);
+    .brand .title{
+      font-weight:800;
+      font-size:14px;
     }
 
-    h2{
-      margin:0 0 10px;
-      color:var(--ink);
-      display:flex; align-items:center; gap:10px;
-      padding-bottom:10px;
-      border-bottom:1px solid var(--border);
-    }
-    h3{ margin:18px 0 10px; }
-    p{ line-height:1.45; }
-    .muted{ color:var(--muted); font-size:13px; }
-
-    .badge{
-      display:inline-block;
-      background:rgba(243,112,33,.12);
-      color:var(--primary-700);
-      border:1px solid rgba(243,112,33,.25);
-      padding:4px 10px;
-      border-radius:999px;
+    .brand .sub{
       font-size:12px;
-      font-weight:900;
-      margin-left:8px;
+      color:var(--muted);
     }
 
-    .ok{ background:var(--ok-bg); border:1px solid var(--ok-bd); padding:12px; border-radius:12px; margin:12px 0; }
-    .warning{ background:var(--warn-bg); border:1px solid var(--warn-bd); padding:12px; border-radius:12px; margin:12px 0; }
-    .lilas-alert{
-      background:var(--lilas-bg);
-      border:1px solid var(--lilas-bd);
-      border-left:6px solid var(--lilas-bar);
-      padding:14px; border-radius:12px; margin:14px 0;
+    .menu{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-bottom:20px;
     }
-    .lilas-alert strong{ display:block; margin-bottom:6px; }
 
-    /* Cards e grid */
-    .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-    @media (max-width: 900px){ .grid-2{ grid-template-columns:1fr; } }
+    .menu a{
+      text-decoration:none;
+      color:var(--text);
+      font-weight:700;
+      padding:10px 12px;
+      border-radius:12px;
+      transition:.2s ease;
+    }
 
-    /* Vídeos */
-    .video-card{
-      background:#FAFAFD;
+    .menu a:hover,
+    .menu a.active{
+      background:#fff;
+      box-shadow:0 1px 4px rgba(0,0,0,.05);
+    }
+
+    .content{
+      padding:24px;
+    }
+
+    .container{
+      max-width:1150px;
+      margin:auto;
+    }
+
+    .hero{
+      background:linear-gradient(135deg, #fff, #fff7ed);
       border:1px solid var(--border);
-      padding:14px;
-      border-radius:16px;
-      margin:12px 0;
+      border-radius:24px;
+      padding:28px;
+      margin-bottom:20px;
+      box-shadow:var(--shadow);
     }
-    .video-title{
-      display:flex; align-items:center; gap:10px;
-      font-weight:900;
+
+    .hero-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      font-weight:800;
+      color:var(--brand-dark);
+      background:var(--brand-soft);
+      padding:6px 10px;
+      border-radius:999px;
+      margin-bottom:14px;
+    }
+
+    .hero h1{
+      margin:0;
+      font-size:32px;
+      line-height:1.2;
+    }
+
+    .hero p{
+      margin:10px 0 0;
+      color:var(--muted);
+      max-width:760px;
+    }
+
+    .hero-actions{
+      margin-top:18px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border:0;
+      cursor:pointer;
+      border-radius:14px;
+      padding:14px 18px;
+      font-weight:800;
+      text-decoration:none;
+      transition:.2s ease;
+    }
+
+    .btn-primary{
+      background:var(--brand);
+      color:#fff;
+    }
+
+    .btn-primary:hover{
+      background:var(--brand-dark);
+    }
+
+    .btn-secondary{
+      background:#fff;
+      color:var(--text);
+      border:1px solid var(--border);
+    }
+
+    .btn-secondary:hover{
+      background:#FAFAFA;
+    }
+
+    .section{
+      margin-bottom:24px;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:22px;
+      font-weight:800;
+      margin:0 0 14px;
+    }
+
+    .intro-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:16px;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:20px;
+      box-shadow:0 1px 10px rgba(0,0,0,.04);
+    }
+
+    .card h3{
       margin:0 0 10px;
+      font-size:18px;
     }
-    .video-grid{
+
+    .card p{
+      margin:0;
+      color:#374151;
+    }
+
+    .info-list{
+      margin:12px 0 0 18px;
+    }
+
+    .info-list li{
+      margin-bottom:8px;
+    }
+
+    .highlight-box{
+      background:var(--brand-soft);
+      border:1px solid #FDBA74;
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .highlight-box strong{
+      display:block;
+      margin-bottom:8px;
+      color:var(--brand-dark);
+    }
+
+    .nav-cards{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:14px;
+    }
+
+    .nav-card{
+      display:block;
+      text-decoration:none;
+      color:inherit;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:20px;
+      box-shadow:0 1px 10px rgba(0,0,0,.04);
+      transition:.2s ease;
+    }
+
+    .nav-card:hover{
+      transform:translateY(-2px);
+      box-shadow:var(--shadow);
+    }
+
+    .nav-card-icon{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      background:var(--brand-soft);
+      color:var(--brand-dark);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      margin-bottom:12px;
+    }
+
+    .nav-card h3{
+      margin:0 0 8px;
+      font-size:16px;
+    }
+
+    .nav-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .flow-layout{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+
+    .flow-image-box{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:18px;
+      box-shadow:0 1px 10px rgba(0,0,0,.04);
+    }
+
+    .flow-image-box img{
+      width:100%;
+      display:block;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:#fff;
+    }
+
+    .flow-caption{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .grid-2{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:14px;
-      align-items:start;
     }
-    .video-label{
-      font-weight:900;
-      color:var(--ink);
-      margin:6px 0 10px;
-      display:flex; align-items:center; gap:8px;
-    }
-    .video-frame{
-      background:#000;
-      border-radius:14px;
-      overflow:hidden;
+
+    .small-card{
+      background:#fff;
       border:1px solid var(--border);
-    }
-    .video-frame.horizontal iframe{ width:100%; height:360px; }
-    .video-frame.vertical{ max-width:280px; margin:0 auto; }
-    .video-frame.vertical iframe{ width:100%; height:360px; }
-
-    @media (max-width: 900px){
-      .video-grid{ grid-template-columns:1fr; }
-      .video-frame.vertical{ max-width:320px; }
+      border-radius:18px;
+      padding:18px;
+      box-shadow:0 1px 8px rgba(0,0,0,.03);
     }
 
-    footer{ text-align:center; padding:18px; color:var(--muted); }
+    .small-card h3{
+      margin:0 0 8px;
+      font-size:16px;
+    }
 
-    /* Botão topo */
+    .small-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .ok{
+      background:var(--ok-bg);
+      border:1px solid var(--ok-bd);
+      padding:12px;
+      border-radius:14px;
+      margin:12px 0;
+    }
+
+    .warning{
+      background:var(--warn-bg);
+      border:1px solid var(--warn-bd);
+      padding:12px;
+      border-radius:14px;
+      margin:12px 0;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
     #backToTop{
       display:none;
       position:fixed;
       bottom:18px;
       left:18px;
       z-index:999;
-      background:var(--primary);
+      background:var(--brand);
       color:#fff;
       border:none;
       border-radius:999px;
       padding:12px 16px;
       cursor:pointer;
-      font-weight:900;
-      box-shadow:0 8px 20px rgba(0,0,0,.18);
+      font-weight:800;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
     }
-    #backToTop:hover{ background:var(--primary-700); }
 
-    /* Ocultar sections na busca */
-    .hidden{ display:none !important; }
+    #backToTop:hover{
+      background:var(--brand-dark);
+    }
+
+    @media (max-width: 1100px){
+      .nav-cards{
+        grid-template-columns:repeat(2, 1fr);
+      }
+
+      .intro-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 900px){
+      .app{
+        grid-template-columns:1fr;
+      }
+
+      .sidebar{
+        height:auto;
+        position:sticky;
+        top:0;
+        z-index:30;
+        border-right:0;
+        border-bottom:1px solid var(--border);
+      }
+
+      .menu{
+        flex-direction:row;
+        flex-wrap:wrap;
+      }
+
+      .content{
+        padding:18px;
+      }
+
+      .hero h1{
+        font-size:26px;
+      }
+
+      .nav-cards{
+        grid-template-columns:1fr;
+      }
+
+      .grid-2{
+        grid-template-columns:1fr;
+      }
+    }
   </style>
 </head>
-
 <body>
-<header>
-  <div class="wrap">
-    <img src="logo_saga.png" alt="Logo Saga" style="height:48px;" />
-    <div>
-      <h1>Saga Conecta • Portal de Treinamento <span class="badge">Case de Sucesso</span></h1>
-      <p>Conteúdo oficial: visão geral, papéis, fluxos e vídeos por persona.</p>
-    </div>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="logo_saga.png" alt="Logo Saga" />
+        <div>
+          <div class="title">Saga Conecta</div>
+          <div class="sub">Portal interno e case</div>
+        </div>
+      </div>
+
+      <nav class="menu">
+        <a href="#sobre" class="active">Sobre</a>
+        <a href="#atalhos">Atalhos</a>
+        <a href="#fluxo">Fluxo</a>
+        <a href="#apoio">Materiais de apoio</a>
+      </nav>
+
+      <nav class="menu">
+        <a href="usuarios.html">Criação de usuários</a>
+        <a href="videos.html">Vídeos</a>
+        <a href="faq.html">FAQ</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="container">
+
+        <section class="hero" id="sobre">
+          <div class="hero-badge">
+            <i class="fa-solid fa-bolt"></i>
+            Solução digital de entrega
+          </div>
+
+          <h1>Saga Conecta</h1>
+          <p>
+            Plataforma do Grupo Saga que centraliza a jornada de entrega de veículos, conectando áreas operacionais,
+            gestão e comunicação com o cliente em um único ambiente.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#fluxo">
+              <i class="fa-solid fa-route"></i>
+              Ver fluxo do processo
+            </a>
+
+            <a class="btn btn-secondary" href="videos.html">
+              <i class="fa-solid fa-clapperboard"></i>
+              Assistir vídeos
+            </a>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title"><i class="fa-solid fa-circle-info"></i> O que você encontra aqui</h2>
+
+          <div class="intro-grid">
+            <div class="card">
+              <h3>Visão geral da solução</h3>
+              <p>
+                O Saga Conecta organiza o pós-venda e a entrega de veículos com atualização direta das áreas envolvidas,
+                como despachante, estética, acessórios, revisão, seguro e entrega técnica.
+              </p>
+
+              <ul class="info-list">
+                <li>Centralização do fluxo operacional</li>
+                <li>Mais visibilidade para gestão</li>
+                <li>Padronização entre lojas e equipes</li>
+                <li>Melhor experiência para o cliente</li>
+              </ul>
+
+              <div class="ok">
+                As notificações são personalizáveis, permitindo definir quais mensagens o cliente recebe e o conteúdo de cada comunicação.
+              </div>
+            </div>
+
+            <div class="highlight-box">
+              <strong>Objetivo do portal</strong>
+              Reunir, em um único lugar, a visão do produto, os fluxos principais, a biblioteca de vídeos,
+              o manual de criação de usuários e as dúvidas frequentes para apoio à operação e treinamento.
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="atalhos">
+          <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> Acesso rápido</h2>
+
+          <div class="nav-cards">
+            <a class="nav-card" href="usuarios.html">
+              <div class="nav-card-icon">
+                <i class="fa-solid fa-user-gear"></i>
+              </div>
+              <h3>Criação de usuários</h3>
+              <p>Cadastro, permissões, perfis e regras operacionais.</p>
+            </a>
+
+            <a class="nav-card" href="videos.html">
+              <div class="nav-card-icon">
+                <i class="fa-solid fa-clapperboard"></i>
+              </div>
+              <h3>Biblioteca de vídeos</h3>
+              <p>Vídeos por perfil e funcionalidade do Saga Conecta.</p>
+            </a>
+
+            <a class="nav-card" href="faq.html">
+              <div class="nav-card-icon">
+                <i class="fa-solid fa-circle-question"></i>
+              </div>
+              <h3>FAQ</h3>
+              <p>Perguntas frequentes organizadas por categoria.</p>
+            </a>
+
+            <a class="nav-card" href="https://suporte.saganet.com.br/znuny/customer.pl?Action=NewTicketService;ServiceID=1625" target="_blank" rel="noopener noreferrer">
+              <div class="nav-card-icon">
+                <i class="fa-solid fa-headset"></i>
+              </div>
+              <h3>Suporte</h3>
+              <p>Abertura de chamado para atendimento do time responsável.</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="section" id="fluxo">
+          <h2 class="section-title"><i class="fa-solid fa-route"></i> Fluxo do Saga Conecta</h2>
+
+          <div class="flow-layout">
+            <div class="flow-image-box">
+              <img src="fluxo-saga-conecta.png" alt="Fluxo do Saga Conecta" />
+              <div class="flow-caption">
+                Espaço reservado para a imagem do fluxo do Saga Conecta.
+                Salve a imagem final com esse nome ou altere o caminho do arquivo conforme preferir.
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="small-card">
+                <h3>Como funciona</h3>
+                <p>
+                  O vendedor conclui a venda, atualiza o Mobi e os dados seguem para o Saga Conecta.
+                  Depois disso, áreas como Seguro, Acessórios e Estética atualizam suas etapas até a liberação da entrega.
+                </p>
+              </div>
+
+              <div class="small-card">
+                <h3>Regra importante</h3>
+                <p>
+                  A entrega depende do correto preenchimento das etapas por cada área responsável. Sem isso,
+                  o processo pode ficar travado e impedir a conclusão da entrega técnica.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="apoio">
+          <h2 class="section-title"><i class="fa-solid fa-folder-open"></i> Materiais de apoio</h2>
+
+          <div class="grid-2">
+            <div class="small-card">
+              <h3>Treinamento por perfil</h3>
+              <p>
+                Acesse a biblioteca de vídeos para consultar conteúdos específicos de gestor, key user,
+                seguro, acessórios, entrega técnica e visão geral do sistema.
+              </p>
+            </div>
+
+            <div class="small-card">
+              <h3>Suporte e dúvidas</h3>
+              <p>
+                O FAQ reúne respostas rápidas para operação. Quando necessário,
+                o chamado pode ser aberto diretamente no portal de suporte.
+              </p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
   </div>
-</header>
 
-<nav>
-  <div class="nav-wrap">
-    <div class="nav-left">
-      <a href="#sobre"><i class="fa-solid fa-circle-info"></i> Sobre</a>
-      <a href="#papeis"><i class="fa-solid fa-user-group"></i> Papéis</a>
-      <a href="#fluxos"><i class="fa-solid fa-route"></i> Fluxos</a>
-      <a href="#baixar-entregas"><i class="fa-solid fa-download"></i> Baixar Entregas</a>
-      <a href="#videos"><i class="fa-solid fa-clapperboard"></i> Vídeos</a>
+  <button id="backToTop" title="Voltar ao topo">Topo</button>
 
-      <!-- Página separada -->
-      <a href="usuarios.html"><i class="fa-solid fa-user-gear"></i> Criação de Usuários</a>
-    </div>
-
-    <div class="nav-right">
-      <div class="nav-search">
-        <input id="searchInput" type="search" placeholder="Pesquisar no portal (persona, etapa, vídeo...)" />
-        <button id="clearSearch" class="btn" type="button">Limpar</button>
-      </div>
-
-      <select id="jumpSelect" aria-label="Ir para">
-        <option value="">Ir para…</option>
-        <option value="#sobre">Sobre</option>
-        <option value="#papeis">Papéis</option>
-        <option value="#fluxos">Fluxos</option>
-        <option value="#baixar-entregas">Baixar Entregas</option>
-        <option value="#videos">Vídeos</option>
-      </select>
-    </div>
-  </div>
-</nav>
-
-<main>
-  <section id="sobre">
-    <h2><i class="fa-solid fa-bolt"></i> O que é o Saga Conecta</h2>
-
-    <p>
-      O <strong>Saga Conecta</strong> é a solução digital do Grupo Saga que centraliza e organiza toda a jornada de entrega de veículos,
-      conectando vendedores, áreas operacionais, gestores e clientes em um único ambiente.
-    </p>
-
-    <p>
-      A plataforma permite acompanhar, de forma estruturada, as etapas do pós-venda — do faturamento até a entrega do veículo —
-      com atualização direta das áreas envolvidas, como despachante, estética, acessórios, revisão e entrega técnica.
-      As comunicações com o cliente são feitas por meio de <strong>notificações totalmente personalizáveis</strong>,
-      permitindo definir <strong>quais mensagens o cliente recebe</strong> e <strong>o conteúdo de cada notificação</strong>.
-    </p>
-
-    <div class="ok">
-      <strong>Objetivo:</strong> aumentar agilidade, padronização e transparência no processo de entrega, fortalecendo a experiência do cliente e o controle operacional da loja.
-    </div>
-
-    <div class="grid-2">
-      <div class="warning">
-        <strong><i class="fa-solid fa-triangle-exclamation"></i> Observação importante</strong><br/>
-        Este portal é um <strong>documento vivo</strong> (atualizações contínuas) e deve ser o ponto único de consulta.
-      </div>
-      <div class="warning">
-        <strong><i class="fa-solid fa-link"></i> Página separada</strong><br/>
-        A parte de <strong>Criação de Usuários</strong> foi movida para <strong>usuarios.html</strong> para deixar o portal mais “case” e menos operacional.
-      </div>
-    </div>
-  </section>
-
-  <section id="papeis">
-    <h2><i class="fa-solid fa-user-group"></i> Papéis no App e Responsabilidades</h2>
-
-    <h3><i class="fa-solid fa-user-tie"></i> 1. Vendas (Vendedor / Consultor)</h3>
-    <ul>
-      <li>Acompanhar entregas</li>
-      <li>Garantir dados do cliente (Mobi → Dealer)</li>
-      <li>Agendar entrega</li>
-      <li>Preencher serviços conectados</li>
-      <li><strong>Etapas:</strong> Venda concluída; Cadastro do cliente; Serviços conectados; Agendamento da entrega</li>
-    </ul>
-
-    <h3><i class="fa-solid fa-file-lines"></i> 2. Despachante</h3>
-    <ul>
-      <li>Documentação</li>
-      <li>Emplacamento</li>
-      <li><strong>Etapas:</strong> Documentação do cliente; Emplacamento</li>
-    </ul>
-
-    <h3><i class="fa-solid fa-hand-holding-dollar"></i> 3. Financeiro</h3>
-    <ul>
-      <li>Faturamento</li>
-      <li>Confirmação de pagamento</li>
-      <li><strong>Etapas:</strong> Faturamento; Pagamento confirmado</li>
-    </ul>
-
-    <h3><i class="fa-solid fa-shield-halved"></i> 4. Seguro</h3>
-    <ul>
-      <li>Registrar contratação do seguro</li>
-      <li>Atualizar status (pendente / contratado / recusado)</li>
-      <li>Informar pendências de documentação</li>
-      <li>Anexar comprovantes quando necessário</li>
-      <li><strong>Etapas:</strong> Contratação do seguro; Validação do seguro</li>
-      <li><strong>Impacto:</strong> a entrega não pode ser concluída sem seguro validado (quando aplicável)</li>
-    </ul>
-
-    <h3><i class="fa-solid fa-award"></i> 5. Qualidade (Governança)</h3>
-    <ul>
-      <li>Garantir aderência ao processo</li>
-      <li>Acompanhar gargalos e reincidências</li>
-      <li>Atuar em desvios</li>
-      <li>Usar dashboards gerenciais</li>
-      <li><strong>Observação:</strong> não executa etapas operacionais</li>
-    </ul>
-
-    <h3><i class="fa-solid fa-wand-magic-sparkles"></i> 6. Estética (Película e Acabamento)</h3>
-    <ul>
-      <li>Aplicar e registrar película</li>
-      <li>Registrar acabamento estético</li>
-      <li>Anexar fotos</li>
-      <li><strong>Etapas:</strong> Película; Acabamento estético</li>
-    </ul>
-
-    <h3><i class="fa-solid fa-boxes-stacked"></i> 7. Acessórios</h3>
-    <ul>
-      <li>Instalar acessórios</li>
-      <li>Registrar status e evidências</li>
-      <li><strong>Etapas:</strong> Instalação de acessórios</li>
-    </ul>
-
-    <h3><i class="fa-solid fa-car-side"></i> 8. Entregador (Entrega Técnica)</h3>
-    <ul>
-      <li>Executar checklist</li>
-      <li>Preparar veículo</li>
-      <li>Realizar entrega técnica</li>
-      <li>Confirmar entrega</li>
-      <li>Anexar fotos finais</li>
-      <li><strong>Etapas:</strong> Checklist; Preparação; Entrega técnica; Confirmação</li>
-    </ul>
-
-    <h3><i class="fa-solid fa-clipboard-check"></i> 9. Agente de Pátio / Revisão (Automático)</h3>
-    <ul>
-      <li>Revisão automática via Dealer</li>
-      <li><strong>Acompanhamento:</strong> Qualidade / Gestão</li>
-    </ul>
-
-    <h3><i class="fa-solid fa-chart-line"></i> 10. Gestor / Gerente</h3>
-    <ul>
-      <li>Visualizar todas as entregas</li>
-      <li>Acompanhar SLA e gargalos</li>
-      <li>Reabrir etapas quando necessário</li>
-    </ul>
-  </section>
-
-  <section id="fluxos">
-    <h2><i class="fa-solid fa-route"></i> Fluxo de Agendamento de Entrega</h2>
-    <div class="warning">
-      <strong><i class="fa-solid fa-diagram-project"></i> Lógica do fluxo</strong><br/>
-      O vendedor conclui a venda, atualiza o <strong>Mobi</strong> e os dados seguem para o <strong>Saga Conecta</strong>.
-      Em seguida, <strong>Seguro, Acessórios e Estética</strong> atualizam suas etapas no Saga Conecta, preparando o veículo para a entrega.
-    </div>
-
-    <!-- Troque o src pela imagem gerada (local no seu projeto) -->
-    <img src="fluxo-agendamento.png" alt="Fluxo de agendamento de entrega" style="width:100%; border:1px solid var(--border); border-radius:16px;">
-    <p class="muted">Dica: exporte essa imagem em PNG (1920px) para ficar perfeita no portfólio e no portal.</p>
-  </section>
-
-  <section id="baixar-entregas">
-    <h2><i class="fa-solid fa-download"></i> Baixar Entregas (entregas antigas)</h2>
-    <p>Função para <strong>arquivar entregas concluídas</strong> (veículo já entregue ao cliente), mantendo a lista operacional mais limpa.</p>
-
-    <ol>
-      <li>Vá em <strong>Lista</strong></li>
-      <li>Clique em <strong>Baixar Entregas</strong></li>
-      <li>Filtre por <strong>chassi</strong>, <strong>nome do cliente</strong> etc.</li>
-      <li>Selecione as entregas que deseja baixar</li>
-      <li>Clique em <strong>Baixar Entregas</strong> novamente para confirmar</li>
-    </ol>
-
-    <div class="warning">
-      <strong><i class="fa-solid fa-triangle-exclamation"></i> Importante</strong><br/>
-      Use apenas em entregas <strong>concluídas</strong>. Ao baixar, a entrega sai da lista operacional principal.
-    </div>
-  </section>
-
-  <section id="videos">
-    <h2><i class="fa-solid fa-clapperboard"></i> Vídeos</h2>
-    <p class="muted">Vídeos por persona. Como estão no Vimeo, o download depende das permissões do player.</p>
-
-    <!-- GERAL -->
-    <div class="video-card">
-      <div class="video-title"><i class="fa-solid fa-circle-play"></i> Visão Geral do Saga Conecta</div>
-
-      <div class="video-grid">
-        <div class="video-item">
-          <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
-          <div class="video-frame vertical">
-            <iframe src="https://player.vimeo.com/video/1152026208" frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
-
-        <div class="video-item">
-          <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
-          <div class="video-frame horizontal">
-            <iframe src="https://player.vimeo.com/video/1152022036" frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- GESTOR / KEY USER -->
-    <div class="video-card">
-      <div class="video-title"><i class="fa-solid fa-circle-play"></i> Gestor / Key User</div>
-      <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
-      <div class="video-frame horizontal">
-        <iframe src="https://player.vimeo.com/video/1152187318" frameborder="0"
-          allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-
-    <!-- AGENDAMENTO -->
-    <div class="video-card">
-      <div class="video-title"><i class="fa-solid fa-circle-play"></i> Agendamento Manual</div>
-      <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
-      <div class="video-frame vertical">
-        <iframe src="https://player.vimeo.com/video/1152226737" frameborder="0"
-          allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-
-    <!-- ENTREGA TÉCNICA -->
-    <div class="video-card">
-      <div class="video-title"><i class="fa-solid fa-circle-play"></i> Entrega Técnica</div>
-      <div class="video-grid">
-        <div class="video-item">
-          <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
-          <div class="video-frame vertical">
-            <iframe src="https://player.vimeo.com/video/1152231601" frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
-        <div class="video-item">
-          <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
-          <div class="video-frame horizontal">
-            <iframe src="https://player.vimeo.com/video/1152231643" frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SEGURO -->
-    <div class="video-card">
-      <div class="video-title"><i class="fa-solid fa-shield-halved"></i> Seguro</div>
-      <div class="video-grid">
-        <div class="video-item">
-          <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
-          <div class="video-frame vertical">
-            <iframe src="https://player.vimeo.com/video/1152243380" frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
-        <div class="video-item">
-          <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
-          <div class="video-frame horizontal">
-            <iframe src="https://player.vimeo.com/video/1152243248" frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ACESSÓRIOS -->
-    <div class="video-card">
-      <div class="video-title"><i class="fa-solid fa-boxes-stacked"></i> Acessórios</div>
-      <div class="video-grid">
-        <div class="video-item">
-          <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
-          <div class="video-frame vertical">
-            <iframe src="https://player.vimeo.com/video/1152244542" frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
-        <div class="video-item">
-          <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
-          <div class="video-frame horizontal">
-            <iframe src="https://player.vimeo.com/video/1152244388" frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- EMBELEZAMENTO -->
-    <div class="video-card">
-      <div class="video-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Embelezamento</div>
-      <div class="video-grid">
-        <div class="video-item">
-          <div class="video-label"><i class="fa-solid fa-mobile-screen-button"></i> Versão celular</div>
-          <div class="video-frame vertical">
-            <iframe src="https://player.vimeo.com/video/1152247751" frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
-        <div class="video-item">
-          <div class="video-label"><i class="fa-solid fa-desktop"></i> Versão desktop</div>
-          <div class="video-frame horizontal">
-            <iframe src="https://player.vimeo.com/video/1152247670" frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </section>
-</main>
-
-<footer>
-  Saga Conecta • Portal interno (documento vivo)
-</footer>
-
-<button id="backToTop" title="Voltar ao topo">⬆ Topo</button>
-
-<script>
-  // Jump select
-  (function () {
-    const jump = document.getElementById('jumpSelect');
-    if (!jump) return;
-    jump.addEventListener('change', () => {
-      if (!jump.value) return;
-      window.location.hash = jump.value;
-      jump.value = '';
-    });
-  })();
-
-  // Search filter
-  (function () {
-    const input = document.getElementById('searchInput');
-    const clear = document.getElementById('clearSearch');
-    const sections = Array.from(document.querySelectorAll('main section'));
-
-    const normalize = (s) =>
-      (s || '').toString().toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-    const apply = (q) => {
-      const query = normalize(q);
-      if (!query) return sections.forEach(sec => sec.classList.remove('hidden'));
-      sections.forEach(sec => {
-        const text = normalize(sec.innerText);
-        sec.classList.toggle('hidden', !text.includes(query));
+  <script>
+    (function(){
+      const btn = document.getElementById('backToTop');
+      window.addEventListener('scroll', () => {
+        btn.style.display = window.scrollY > 400 ? 'block' : 'none';
       });
-    };
+      btn.addEventListener('click', () => {
+        window.scrollTo({ top:0, behavior:'smooth' });
+      });
+    })();
+  </script>
 
-    if (input) input.addEventListener('input', () => apply(input.value));
-    if (clear) clear.addEventListener('click', () => { input.value=''; apply(''); input.focus(); });
-  })();
-
-  // Back to top
-  (function(){
-    const btn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => btn.style.display = window.scrollY > 400 ? 'block' : 'none');
-    btn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
-  })();
-</script>
 </body>
 </html>
